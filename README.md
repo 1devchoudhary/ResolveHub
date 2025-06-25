@@ -54,6 +54,31 @@ ResolveHub/
 ├── .gitignore
 ├── README.md
 
+## 📸 Screenshots
+
+### 🧑‍💻 User Dashboard
+![User Dashboard](./screenshots/user_dashboard.png)
+
+### 🔐 Login Page
+![Login Page](./assets/Screenshot%20(70).png)
+
+### 📝 Signup Page
+![Signup Page](./assets/Screenshot%20(72).png)
+
+### 🎫 Ticket List
+![Ticket List](./assets/Screenshot%20(73).png)
+
+### 🧾 Ticket Detail View
+![Ticket Detail](./assets/Screenshot%20(75).png)
+
+### 🛠️ Admin Dashboard
+![Admin Dashboard](./assets/Screenshot%20(76).png)
+
+### 👤 User Profile Page
+![User Profile](./assets/Screenshot%20(79).png)
+
+### 💬 Chat/Contact Page
+![Contact Page](./assets/Screenshot%20(80).png)
 
 
 ## Setup Instructions
