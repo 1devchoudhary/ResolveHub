@@ -4,8 +4,9 @@ import User from '../models/User.js';      // User model
 // 1. Get all tickets
 export const getAllUsersTickets = async (req, res) => {
   try {
-    const tickets = await Ticket.find().populate('user', 'name email'); // Populate user info
-    res.status(200).json(tickets);
+    const tickets = await Ticket.find();
+    res.status(200).json(200,{tickets},"Tickets fatched successfully");
+    console.log("ALL  TICKETS:", tickets)
   } catch (error) {
     res.status(500).json({ message: 'Failed to fetch tickets', error: error.message });
   }

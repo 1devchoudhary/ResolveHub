@@ -1,31 +1,7 @@
-// import mongoose from 'mongoose';
-
-// const ticketSchema = new mongoose.Schema({
-//   subject: String,
-//   category: String,
-//   description: String,
-//   attachmentName: String,
-//   user: {
-//     type: mongoose.Schema.Types.ObjectId,
-//     ref: "User",
-//     required: true,
-//   },
-//   status: {
-//     type: String,
-//     enum: ['open', 'pending', 'resolved'],
-//     default: 'open'
-//   },
-//   createdAt: {
-//     type: Date,
-//     default: Date.now
-//   }
-// });
-
-// export default mongoose.model('Ticket', ticketSchema);
-
 import mongoose from 'mongoose';
 
-const ticketSchema = new mongoose.Schema({
+const ticketSchema = new mongoose.Schema(
+  {
   subject: {
     type: String,
     required: true,
@@ -61,18 +37,12 @@ const ticketSchema = new mongoose.Schema({
     enum: ['open', 'pending', 'resolved'],
     default: 'open',
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now,
-  },
   comments: [{
     type: String,
     default: [],
   }], // For storing admin's notes or updates
-});
+},
+{timestamps:true}
+);
 
 export default mongoose.model('Ticket', ticketSchema);
