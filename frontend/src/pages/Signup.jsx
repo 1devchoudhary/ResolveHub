@@ -1,0 +1,128 @@
+import { Link } from 'react-router-dom';
+import { useSignUp } from '../hooks/useSignUp';
+import { AuthLayout } from '../components/AuthLayout';
+import { Button } from '../components/ui/Button';
+import { Label, Input, PasswordInput, FieldError, FieldHint } from '../components/ui/Field';
+
+export const Signup = () => {
+
+    const {
+        fullName, setFullName,
+        email, setEmail,
+        password, setPassword,
+        showPassword, setShowPassword,
+        agreeTerms, setAgreeTerms,
+        error,
+        registerUser } = useSignUp();
+
+    return (
+        <AuthLayout
+            title="Create an account"
+            subtitle="Get started with fast, effortless support."
+            logoId="signup-logo"
+            footer={
+                <>
+                    Already have an account?{' '}
+                    <Link
+                        to="/login"
+                        className="font-semibold text-brand-600 hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300 transition-colors duration-200"
+                        id="link-to-login"
+                    >
+                        Log in
+                    </Link>
+                </>
+            }
+        >
+            {/* Form */}
+            <form onSubmit={registerUser} className="space-y-4" id="signup-form">
+                {/* Full Name Field */}
+                <div>
+                    <Label htmlFor="full-name">Full Name</Label>
+                    <Input
+                        id="full-name"
+                        type="text"
+                        required
+                        autoComplete="name"
+                        value={fullName}
+                        onChange={(e) => setFullName(e.target.value)}
+                        placeholder="Jane Doe"
+                        invalid={Boolean(error.fullName)}
+                    />
+                    <FieldError>{error.fullName}</FieldError>
+                </div>
+
+                {/* Email Field */}
+                <div>
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                        id="email"
+                        type="email"
+                        required
+                        autoComplete="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="you@company.com"
+                        invalid={Boolean(error.email)}
+                    />
+                    <FieldError>{error.email}</FieldError>
+                </div>
+
+                {/* Password Field */}
+                <div>
+                    <Label htmlFor="password">Password</Label>
+                    <PasswordInput
+                        id="password"
+                        required
+                        autoComplete="new-password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="At least 8 characters"
+                        show={showPassword}
+                        onToggle={() => setShowPassword(!showPassword)}
+                        toggleId="toggle-signup-password"
+                        invalid={Boolean(error.password)}
+                    />
+                    {error.password ? (
+                        <FieldError>{error.password}</FieldError>
+                    ) : (
+                        <FieldHint>Use 8+ characters with upper & lowercase letters.</FieldHint>
+                    )}
+                </div>
+
+                {/* Terms Checkbox */}
+                <div className="pt-1">
+                    <div className="flex items-start">
+                        <input
+                            id="agree-terms"
+                            type="checkbox"
+                            required
+                            checked={agreeTerms}
+                            onChange={(e) => setAgreeTerms(e.target.checked)}
+                            className="h-4 w-4 mt-0.5 rounded border-border-strong accent-brand-600 cursor-pointer"
+                        />
+                        <label
+                            htmlFor="agree-terms"
+                            className="ml-2.5 block text-xs text-text-secondary cursor-pointer select-none leading-relaxed"
+                        >
+                            I agree to the{' '}
+                            <a href="#" className="font-semibold text-brand-600 dark:text-brand-400 hover:underline">
+                                Terms of Service
+                            </a>{' '}
+                            and{' '}
+                            <a href="#" className="font-semibold text-brand-600 dark:text-brand-400 hover:underline">
+                                Privacy Policy
+                            </a>
+                            .
+                        </label>
+                    </div>
+                    <FieldError>{error.agreeTerms}</FieldError>
+                </div>
+
+                {/* Submit Button */}
+                <Button type="submit" size="lg" fullWidth className="mt-2" id="btn-signup-submit">
+                    Create account
+                </Button>
+            </form>
+        </AuthLayout>
+    );
+};
