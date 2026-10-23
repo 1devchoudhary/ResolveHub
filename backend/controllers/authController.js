@@ -1,15 +1,18 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
-import { use } from "react";
 
 const JWT_SECRET = process.env.JWT_SECRET || "your_super_secret_key";
 
 // Generate JWT Token
-const generateJwtToken = (userId) =>  {
+const generateJwtToken = (userId, role) =>  {
   const token = jwt.sign(
-    {id:userId},JWT_SECRET,process.env.JWT_EXPIRE
+    {userId, role},JWT_SECRET,{
+      algorithm : "HS256",
+      expiresIn : process.env.JWT_EXPIRE}
   )
+
+  return token;
 }
 // Register
 export const registerUser = async (req, res) => {
@@ -58,7 +61,7 @@ export const loginUser = async (req, res) => {
         .json({ success: false, message: "Invalid credentials" });
 
     // Generate JWT token
-    const token = generateJwtToken(user._id)
+    const token = generateJwtToken(user._id, user.role)
       console.log(token);
       
     // Send the token back to the frontend

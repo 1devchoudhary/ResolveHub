@@ -45,7 +45,7 @@ export const updateTicketStatus = async (req, res) => {
       return res.status(404).json({ message: 'Ticket not found' });
     }
 
-    if (!['open', 'in-progress', 'resolved', 'closed'].includes(status)) {
+    if (!['open', 'pending', 'in-progress', 'resolved', 'closed'].includes(status)) {
       return res.status(400).json({ message: 'Invalid status' });
     }
 
