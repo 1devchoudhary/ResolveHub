@@ -1,9 +1,10 @@
 import { useState } from "react"
-import { validateName, validateEmail, validatePassword } from "../utilities/validation";
+import { validateName, validateEmail, validateMobile, validatePassword } from "../utilities/validation";
 
 export const useSignUp =  () => {
     const [fullName, setFullName] = useState("");
     const [email, setEmail] = useState("");
+    const [mobile, setMobile] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [agreeTerms, setAgreeTerms] = useState(false);
@@ -20,6 +21,10 @@ export const useSignUp =  () => {
 
         const emailError = validateEmail(email);
         if(emailError) newErrors.email = emailError;
+        
+        const mobileError = validateMobile(mobile);
+        if(mobileError) newErrors.mobile = mobileError;
+
 
         const passwordError = validatePassword(password);
         if(passwordError) newErrors.password = passwordError;
@@ -35,6 +40,7 @@ export const useSignUp =  () => {
     return {
     fullName, setFullName,
     email, setEmail,
+    mobile, setMobile,
     password, setPassword,
     showPassword, setShowPassword,
     agreeTerms, setAgreeTerms,

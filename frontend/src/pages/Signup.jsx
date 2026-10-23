@@ -9,6 +9,7 @@ export const Signup = () => {
     const {
         fullName, setFullName,
         email, setEmail,
+        mobile, setMobile,
         password, setPassword,
         showPassword, setShowPassword,
         agreeTerms, setAgreeTerms,
@@ -65,6 +66,27 @@ export const Signup = () => {
                         invalid={Boolean(error.email)}
                     />
                     <FieldError>{error.email}</FieldError>
+                </div>
+
+                {/* Mobile Field */}
+                <div>
+                    <Label htmlFor="mobile">Mobile number</Label>
+                    <Input
+                        id="mobile"
+                        type="tel"
+                        inputMode="tel"
+                        required
+                        autoComplete="tel"
+                        value={mobile}
+                        onChange={(e) => setMobile(e.target.value)}
+                        placeholder="+91 98765 43210"
+                        invalid={Boolean(error.mobile)}
+                    />
+                    {error.mobile ? (
+                        <FieldError>{error.mobile}</FieldError>
+                    ) : (
+                        <FieldHint>Only used for urgent updates on your tickets.</FieldHint>
+                    )}
                 </div>
 
                 {/* Password Field */}

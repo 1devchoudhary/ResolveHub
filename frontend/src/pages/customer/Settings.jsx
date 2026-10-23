@@ -55,8 +55,8 @@ export const Settings = () => (
                 <Input id="settings-email" name="email" type="email" defaultValue={currentUser.email} autoComplete="email" />
               </div>
               <div>
-                <Label htmlFor="settings-phone">Phone</Label>
-                <Input id="settings-phone" name="mobile" type="tel" defaultValue={currentUser.phone} autoComplete="tel" />
+                <Label htmlFor="settings-mobile">Mobile number</Label>
+                <Input id="settings-mobile" name="mobile" type="tel" defaultValue={currentUser.mobile} autoComplete="tel" />
               </div>
             </div>
           </div>

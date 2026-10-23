@@ -17,7 +17,7 @@ export const currentUser = {
   _id: 'u_1001',
   name: 'Jane Cooper',
   email: 'jane.cooper@acme.io',
-  phone: '+1 415 555 0132',
+  mobile: '+919876543210',
   role: 'user',
   createdAt: daysAgo(220),
 };
