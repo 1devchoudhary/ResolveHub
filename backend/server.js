@@ -2,9 +2,6 @@ import 'dotenv/config';
 import { checkDatabaseConnection, closePool } from './config/db.js';
 import express from 'express';
 import cors from 'cors';
-import ticketRoutes from './routes/ticketRoutes.js';
-import authRoutes from './routes/authRoutes.js';
-import adminRoutes from './routes/adminRoutes.js';
 
 const PORT = process.env.PORT;
 
@@ -15,11 +12,6 @@ app.get("/", (req, res) => res.send("ResolveHub Backend "))
 // Middleware
 app.use(cors());
 app.use(express.json());
-
-// Routes
-app.use('/api/tickets', ticketRoutes);
-app.use('/api/auth', authRoutes);
-app.use('/api/admin', adminRoutes);
 
 // Only start accepting requests once the database is reachable
 try {

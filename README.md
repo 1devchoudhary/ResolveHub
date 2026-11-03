@@ -27,8 +27,8 @@ Resolve Hub is a full-stack web application designed to simplify and manage cust
 **Backend:**
 - Node.js
 - Express.js
-- MongoDB (MongoDB Atlas)
-- Mongoose
+- PostgreSQL (Neon)
+- node-postgres (pg)
 - JWT (Authentication)
 
 **Tools:**
@@ -93,8 +93,9 @@ cd ResolveHub
 cd backend
 npm install
 
-PORT=5000
-MONGO_URI=your_mongodb_connection_string
+PORT=8000
+DATABASE_URL_POOLED=your_pooled_postgres_connection_string
+DATABASE_URL=your_direct_postgres_connection_string   # used for migrations
 JWT_SECRET=your_jwt_secret
 
 npm start
