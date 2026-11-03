@@ -1,15 +1,16 @@
-import dotenv from 'dotenv';
+import 'dotenv/config';
+import { checkDatabaseConnection, closePool } from './config/db.js';
 import express from 'express';
-import mongoose from 'mongoose';
 import cors from 'cors';
 import ticketRoutes from './routes/ticketRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
 
-dotenv.config(); // Load .env file
+const PORT = process.env.PORT;
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+
+app.get("/", (req, res) => res.send("ResolveHub Backend "))
 
 // Middleware
 app.use(cors());
@@ -20,13 +21,24 @@ app.use('/api/tickets', ticketRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
 
-// MongoDB connection using Atlas URI from .env
-mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => {
-    console.log('✅ MongoDB Atlas connected');
-    app.listen(PORT, () =>
-      console.log(`🚀 Server running on http://localhost:${PORT}`)
-    );
-  })
-  .catch((err) => console.error('❌ MongoDB connection error:', err));
+// Only start accepting requests once the database is reachable
+try {
+  await checkDatabaseConnection();
+} catch (err) {
+  console.error("❌ Could not connect to PostgreSQL:", err.message);
+  process.exit(1);
+}
+
+const server = app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+
+// Graceful shutdown: stop taking new requests, then release DB connections
+const shutdown = (signal) => {
+  console.log(`${signal} received, shutting down…`);
+  server.close(async () => {
+    await closePool();
+    process.exit(0);
+  });
+};
+
+process.on('SIGINT', () => shutdown('SIGINT'));
+process.on('SIGTERM', () => shutdown('SIGTERM'));
