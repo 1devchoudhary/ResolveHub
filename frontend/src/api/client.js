@@ -74,8 +74,9 @@ const doRefresh = async () => {
   try {
     return await attempt();
   } catch (err) {
-    // Another tab may have rotated the shared cookie a moment ago: retry once with the new one
-    if (err instanceof ApiError && err.status === 401) {
+    // Another tab may have rotated the shared cookie a moment ago: retry once with the new one.
+    // "No session" means there was no cookie at all, so there's nothing to retry.
+    if (err instanceof ApiError && err.status === 401 && err.message !== 'No session') {
       await wait(400);
       return attempt();
     }

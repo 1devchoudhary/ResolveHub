@@ -1,5 +1,6 @@
 import { LayoutDashboard, Ticket, Settings, BookOpen, LifeBuoy, Plus } from 'lucide-react';
 import { PortalLayout } from './PortalLayout';
+import { useTicketStats } from '../hooks/queries/useTickets';
 
 const SupportOnlineCard = () => (
   <div className="mx-4 mb-4 rounded-xl border border-border-default bg-linear-to-br from-brand-50 to-surface-primary p-4">
@@ -17,6 +18,8 @@ const SupportOnlineCard = () => (
 );
 
 export const CustomerLayout = () => {
+  const { data: stats } = useTicketStats();
+
   return (
     <PortalLayout
       config={{
@@ -25,7 +28,7 @@ export const CustomerLayout = () => {
         primaryAction: { to: '/app/tickets/new', label: 'New ticket', icon: Plus },
         nav: [
           { to: '/app', label: 'Overview', icon: LayoutDashboard, end: true },
-          { to: '/app/tickets', label: 'My tickets', icon: Ticket },
+          { to: '/app/tickets', label: 'My tickets', icon: Ticket, count: stats?.active },
           { to: '/app/settings', label: 'Settings', icon: Settings },
         ],
         secondaryTitle: 'Resources',

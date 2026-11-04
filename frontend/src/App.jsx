@@ -16,7 +16,7 @@ import { Overview } from './pages/customer/Overview';
 import { MyTickets } from './pages/customer/MyTickets';
 import { NewTicket } from './pages/customer/NewTicket';
 import { TicketDetail } from './pages/customer/TicketDetail';
-import { Settings } from './pages/customer/Settings';
+import { Settings } from './pages/Settings';
 import { PortalWelcome } from './pages/staff/PortalWelcome';
 
 function App() {
@@ -54,6 +54,7 @@ function App() {
         <Route element={<RequireRole role="agent" />}>
           <Route path="/agent" element={<AgentLayout />}>
             <Route index element={<PortalWelcome />} />
+            <Route path="settings" element={<Settings />} />
           </Route>
         </Route>
 
@@ -61,6 +62,7 @@ function App() {
         <Route element={<RequireRole role="admin" />}>
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<PortalWelcome />} />
+            <Route path="settings" element={<Settings />} />
           </Route>
         </Route>
       </Routes>
