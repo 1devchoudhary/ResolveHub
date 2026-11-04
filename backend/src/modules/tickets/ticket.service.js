@@ -197,7 +197,8 @@ export const createTicket = async (customer, input) => {
 
   // actor null: the system assigned it, so the agent is notified too
   notifyInBackground(ticketId, { actor: { id: null }, created: true, assignedTo: agent?.id });
-  return tickets.findById(ticketId);
+  // Same shape as every other ticket mutation (with messages, events and allowed statuses)
+  return getTicket(customer, ticketId);
 };
 
 export const addReply = async (user, ticketId, { body, isInternal, status }) => {
