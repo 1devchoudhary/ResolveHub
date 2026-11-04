@@ -6,6 +6,7 @@ import agentsRouter from './modules/users/agents.routes.js';
 import ticketsRouter from './modules/tickets/ticket.routes.js';
 import categoriesRouter from './modules/categories/categories.routes.js';
 import adminRouter from './modules/admin/admin.routes.js';
+import cronRouter from './modules/demo/cron.routes.js';
 
 const router = Router();
 
@@ -22,5 +23,6 @@ router.use('/agents', agentsRouter);
 router.use('/tickets', ticketsRouter);
 router.use('/categories', categoriesRouter);
 router.use('/admin', adminRouter);
+router.use('/internal/cron', cronRouter);
 
 export default router;

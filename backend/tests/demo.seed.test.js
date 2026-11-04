@@ -5,6 +5,25 @@ import { query } from '../src/config/db.js';
 import { seedDemoData } from '../src/modules/demo/demo.seed.js';
 import { DEMO_PASSWORD } from '../src/modules/demo/demo.data.js';
 
+describe('demo reset cron', () => {
+  it('requires the cron secret', async () => {
+    const missing = await request(app).get('/api/internal/cron/reset-demo');
+    const wrong = await request(app)
+      .get('/api/internal/cron/reset-demo')
+      .set('Authorization', 'Bearer nope');
+    expect(missing.status).toBe(401);
+    expect(wrong.status).toBe(401);
+  });
+
+  it('resets the demo data when called with the secret', async () => {
+    const res = await request(app)
+      .get('/api/internal/cron/reset-demo')
+      .set('Authorization', 'Bearer test-cron-secret');
+    expect(res.status).toBe(200);
+    expect(res.body.data.tickets).toBe(36);
+  });
+});
+
 describe('demo seed', () => {
   it('creates a consistent dataset the demo accounts can sign in to', async () => {
     const summary = await seedDemoData();

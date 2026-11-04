@@ -8,6 +8,7 @@ export default defineConfig({
       NODE_ENV: 'test',
       JWT_ACCESS_SECRET: 'test-secret-that-is-long-enough-for-validation',
       BCRYPT_ROUNDS: '4',
+      CRON_SECRET: 'test-cron-secret',
     },
     globalSetup: ['./tests/globalSetup.js'],
     setupFiles: ['./tests/setup.js'],
