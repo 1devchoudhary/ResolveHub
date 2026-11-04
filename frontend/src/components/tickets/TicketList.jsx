@@ -56,7 +56,16 @@ export const TicketList = ({
     setSearchDraft(q);
   }
 
-  const params = { ...fixedParams, status, q, sort, priority, page, limit: PAGE_SIZE };
+  // An explicit status tab wins over the view's default (e.g. "active" for an agent's own tickets)
+  const params = {
+    ...fixedParams,
+    q,
+    sort,
+    priority,
+    page,
+    limit: PAGE_SIZE,
+    status: status || fixedParams.status,
+  };
   const { data, isPending, isError, isPlaceholderData, refetch } = useTickets(params);
   const { data: stats } = useTicketStats();
 
@@ -101,7 +110,7 @@ export const TicketList = ({
                   isActive ? 'text-text-primary' : 'text-text-secondary hover:text-text-primary',
                 )}
               >
-                {tab.label}
+                {tab.key === '' && fixedParams.status === 'active' ? 'Active' : tab.label}
                 {showTabCounts && stats && (
                   <span
                     className={cn(

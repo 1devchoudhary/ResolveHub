@@ -105,7 +105,10 @@ const TopSearch = ({ searchPath, placeholder }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const q = value.trim();
-    navigate(q ? `${searchPath}?q=${encodeURIComponent(q)}` : searchPath);
+    // searchPath may already carry a query string (e.g. /agent?view=all)
+    const url = new URL(searchPath, window.location.origin);
+    if (q) url.searchParams.set('q', q);
+    navigate(`${url.pathname}${url.search}`);
   };
 
   return (
