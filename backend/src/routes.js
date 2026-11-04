@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { query } from './config/db.js';
 import authRouter from './modules/auth/auth.routes.js';
+import usersRouter from './modules/users/users.routes.js';
 
 const router = Router();
 
@@ -12,5 +13,6 @@ router.get('/health', async (_req, res) => {
 });
 
 router.use('/auth', authRouter);
+router.use('/users', usersRouter);
 
 export default router;
