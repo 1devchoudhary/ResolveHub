@@ -18,6 +18,8 @@ import { NewTicket } from './pages/customer/NewTicket';
 import { TicketDetail } from './pages/customer/TicketDetail';
 import { Settings } from './pages/Settings';
 import { PortalWelcome } from './pages/staff/PortalWelcome';
+import { TicketQueue } from './pages/staff/TicketQueue';
+import { TicketWorkspace } from './pages/staff/TicketWorkspace';
 
 function App() {
   return (
@@ -53,7 +55,8 @@ function App() {
         {/* Agent portal */}
         <Route element={<RequireRole role="agent" />}>
           <Route path="/agent" element={<AgentLayout />}>
-            <Route index element={<PortalWelcome />} />
+            <Route index element={<TicketQueue portal="agent" />} />
+            <Route path="tickets/:ticketNumber" element={<TicketWorkspace portal="agent" />} />
             <Route path="settings" element={<Settings />} />
           </Route>
         </Route>
