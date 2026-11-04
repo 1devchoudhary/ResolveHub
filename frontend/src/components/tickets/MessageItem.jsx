@@ -1,19 +1,20 @@
+import { Lock } from 'lucide-react';
 import { Avatar } from '../ui/Avatar';
 import { Badge } from '../ui/Badge';
-import { AttachmentTile } from './AttachmentTile';
 import { cn } from '../../utilities/cn';
 import { formatRelative, formatDateTime } from '../../utilities/format';
 
-// One message in the ticket conversation. Agent replies get a brand tint.
+// One message in the ticket conversation. Support replies get a brand tint; internal notes
+// (staff only) are amber so nobody mistakes them for something the customer can see.
 export const MessageItem = ({
   author,
   body,
   createdAt,
-  attachments = [],
   isOwn = false,
+  isInternal = false,
   label,
 }) => {
-  const isAgent = author?.role === 'agent' || author?.role === 'admin';
+  const isSupport = author?.role === 'agent' || author?.role === 'admin';
 
   return (
     <article className="flex gap-3 sm:gap-4">
@@ -24,7 +25,12 @@ export const MessageItem = ({
           <span className="text-sm font-semibold text-text-primary">
             {isOwn ? 'You' : author?.name}
           </span>
-          {isAgent && <Badge tone="brand">Support</Badge>}
+          {isSupport && !isInternal && <Badge tone="brand">Support</Badge>}
+          {isInternal && (
+            <Badge tone="warning">
+              <Lock className="h-3 w-3" /> Internal note
+            </Badge>
+          )}
           {label && <Badge tone="neutral">{label}</Badge>}
           <time
             className="text-xs text-text-tertiary"
@@ -37,22 +43,16 @@ export const MessageItem = ({
 
         <div
           className={cn(
-            'rounded-xl rounded-tl-sm border px-4 py-3 text-sm leading-relaxed text-text-primary whitespace-pre-line',
-            isAgent
-              ? 'border-brand-200 bg-brand-50'
-              : 'border-border-default bg-surface-primary shadow-soft',
+            'whitespace-pre-line rounded-xl rounded-tl-sm border px-4 py-3 text-sm leading-relaxed text-text-primary',
+            isInternal
+              ? 'border-dashed border-status-warning/40 bg-status-warning-bg'
+              : isSupport
+                ? 'border-brand-200 bg-brand-50'
+                : 'border-border-default bg-surface-primary shadow-soft',
           )}
         >
           {body}
         </div>
-
-        {attachments.length > 0 && (
-          <div className="mt-2.5 grid gap-2 sm:grid-cols-2">
-            {attachments.map((file) => (
-              <AttachmentTile key={file.name} name={file.name} size={file.size} />
-            ))}
-          </div>
-        )}
       </div>
     </article>
   );

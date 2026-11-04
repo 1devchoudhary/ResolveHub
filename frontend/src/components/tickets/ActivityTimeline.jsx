@@ -1,4 +1,5 @@
-import { Flag, TicketPlus, UserCheck } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Flag, TicketPlus, UserCheck, UserMinus } from 'lucide-react';
 import { STATUS_META, PRIORITY_META } from '../ui/ticketMeta';
 import { cn } from '../../utilities/cn';
 import { formatRelative, formatDateTime } from '../../utilities/format';
@@ -7,7 +8,7 @@ const Strong = ({ children }) => (
   <span className="font-semibold text-text-primary">{children}</span>
 );
 
-// Icon + sentence for each activity event type
+// Icon + sentence for each audit event. actor === null means the system did it.
 const describe = (event, actorName) => {
   switch (event.type) {
     case 'created':
@@ -15,28 +16,32 @@ const describe = (event, actorName) => {
         icon: TicketPlus,
         text: (
           <>
-            <Strong>{actorName}</Strong> opened this ticket
+            <Strong>{actorName}</Strong> opened the ticket
           </>
         ),
       };
     case 'assigned':
-      return event.actor?.name === 'Auto-assign'
-        ? {
-            icon: UserCheck,
-            text: (
-              <>
-                Auto-assigned to <Strong>{event.to}</Strong>
-              </>
-            ),
-          }
-        : {
-            icon: UserCheck,
-            text: (
-              <>
-                <Strong>{actorName}</Strong> assigned it to <Strong>{event.to}</Strong>
-              </>
-            ),
-          };
+      return {
+        icon: UserCheck,
+        text: event.actor ? (
+          <>
+            <Strong>{actorName}</Strong> assigned it to <Strong>{event.to}</Strong>
+          </>
+        ) : (
+          <>
+            Auto-assigned to <Strong>{event.to}</Strong>
+          </>
+        ),
+      };
+    case 'unassigned':
+      return {
+        icon: UserMinus,
+        text: (
+          <>
+            <Strong>{actorName}</Strong> unassigned <Strong>{event.from}</Strong>
+          </>
+        ),
+      };
     case 'status_changed': {
       const meta = STATUS_META[event.to] ?? STATUS_META.open;
       return {
@@ -70,33 +75,41 @@ const describe = (event, actorName) => {
   }
 };
 
-export const ActivityTimeline = ({ events = [], viewerId, className }) => (
+// `ticketBasePath` (dashboard feed only) adds a link to the ticket each event belongs to
+export const ActivityTimeline = ({ events = [], viewerId, ticketBasePath, className }) => (
   <ol className={cn('relative space-y-5', className)}>
-    {/* vertical rail */}
     <span
-      className="absolute left-[13px] top-2 bottom-2 w-px bg-border-default"
+      className="absolute bottom-2 left-[13px] top-2 w-px bg-border-default"
       aria-hidden="true"
     />
 
     {events.map((event) => {
-      const actorName =
-        event.actor?._id && event.actor._id === viewerId ? 'You' : event.actor?.name;
+      const actorName = event.actor?.id === viewerId ? 'You' : (event.actor?.name ?? 'System');
       const { icon: Icon, text } = describe(event, actorName);
 
       return (
-        <li key={event._id} className="relative flex gap-3">
+        <li key={event.id} className="relative flex gap-3">
           <span className="relative z-10 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-border-default bg-surface-primary text-text-secondary">
             <Icon className="h-3.5 w-3.5" />
           </span>
           <div className="min-w-0 pt-0.5">
-            <p className="text-sm text-text-secondary leading-snug">{text}</p>
-            <time
-              className="text-xs text-text-tertiary"
-              dateTime={event.createdAt}
-              title={formatDateTime(event.createdAt)}
-            >
-              {formatRelative(event.createdAt)}
-            </time>
+            <p className="text-sm leading-snug text-text-secondary">{text}</p>
+            <p className="text-xs text-text-tertiary">
+              {ticketBasePath && event.ticketNumber && (
+                <>
+                  <Link
+                    to={`${ticketBasePath}/${event.ticketNumber}`}
+                    className="font-mono font-semibold hover:text-brand-600"
+                  >
+                    {event.ticketNumber}
+                  </Link>{' '}
+                  ·{' '}
+                </>
+              )}
+              <time dateTime={event.createdAt} title={formatDateTime(event.createdAt)}>
+                {formatRelative(event.createdAt)}
+              </time>
+            </p>
           </div>
         </li>
       );

@@ -10,15 +10,15 @@ const STEPS = [
 ];
 
 // Which step the ticket is on (purely for display)
-const currentStepIndex = ({ status, assignedTo }) => {
+const currentStepIndex = ({ status, assignee }) => {
   if (status === 'resolved' || status === 'closed') return 4; // everything complete
   if (status === 'in-progress' || status === 'pending') return 2;
-  return assignedTo ? 1 : 0;
+  return assignee ? 1 : 0;
 };
 
-// When each step happened, read from the activity log
+// When each step happened, read from the audit trail
 const stepDates = (ticket) => {
-  const activity = ticket.activity ?? [];
+  const activity = ticket.events ?? [];
   const firstStatus = (statuses) =>
     activity.find((e) => e.type === 'status_changed' && statuses.includes(e.to))?.createdAt;
   return {
@@ -29,7 +29,8 @@ const stepDates = (ticket) => {
   };
 };
 
-export const StatusStepper = ({ ticket }) => {
+// `audience` words the waiting step for whoever is looking: the customer or the agent
+export const StatusStepper = ({ ticket, audience = 'customer' }) => {
   const current = currentStepIndex(ticket);
   const dates = stepDates(ticket);
   const awaitingCustomer = ticket.status === 'pending';
@@ -40,7 +41,11 @@ export const StatusStepper = ({ ticket }) => {
         const isComplete = i < current;
         const isCurrent = i === current;
         const isWaiting = isCurrent && awaitingCustomer;
-        const label = isWaiting ? 'Awaiting your reply' : step.label;
+        const label = isWaiting
+          ? audience === 'customer'
+            ? 'Awaiting your reply'
+            : 'Awaiting customer'
+          : step.label;
 
         return (
           <li key={step.key} className="relative flex flex-1 flex-col items-center text-center">
