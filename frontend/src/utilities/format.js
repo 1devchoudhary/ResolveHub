@@ -30,3 +30,12 @@ export const formatDateTime = (date) =>
     hour: 'numeric',
     minute: '2-digit',
   });
+
+// 102 -> "1h 42m", 45 -> "45m", 1500 -> "1d 1h"
+export const formatDuration = (minutes) => {
+  if (minutes === null || minutes === undefined) return '—';
+  if (minutes < 60) return `${Math.max(1, Math.round(minutes))}m`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours}h ${Math.round(minutes % 60)}m`;
+  return `${Math.floor(hours / 24)}d ${hours % 24}h`;
+};

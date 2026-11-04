@@ -11,7 +11,7 @@ import {
 } from 'lucide-react';
 
 // One place that decides how every status / priority looks.
-// Keys match the backend enums in backend/models/Ticket.js.
+// Keys match the CHECK constraints on the tickets table (backend migrations).
 
 export const STATUS_META = {
   open: { label: 'Open', tone: 'info', dot: 'bg-status-info', icon: CircleDot },
