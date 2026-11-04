@@ -11,6 +11,11 @@ export const stats = async (req, res) => {
   return sendSuccess(res, { data: result });
 };
 
+export const activity = async (req, res) => {
+  const items = await ticketService.getRecentActivity(req.user, req.query);
+  return sendSuccess(res, { data: { items } });
+};
+
 export const get = async (req, res) => {
   const ticket = await ticketService.getTicket(req.user, req.params.number);
   return sendSuccess(res, { data: { ticket } });

@@ -159,12 +159,16 @@ export const getTicket = async (user, ticketId) => {
 };
 
 export const getStats = async (user) => {
-  const [counts, medianFirstResponseMinutes] = await Promise.all([
+  const [counts, byStatus, medianFirstResponseMinutes] = await Promise.all([
     isStaff(user) ? tickets.statsForStaff(user.id) : tickets.statsForCustomer(user.id),
+    tickets.countByStatus({ customerId: isStaff(user) ? undefined : user.id }),
     tickets.medianFirstResponseMinutes(),
   ]);
-  return { ...counts, medianFirstResponseMinutes };
+  return { ...counts, byStatus, medianFirstResponseMinutes };
 };
+
+export const getRecentActivity = (user, { limit }) =>
+  tickets.listRecentEvents({ customerId: isStaff(user) ? undefined : user.id, limit });
 
 // ---- Commands -------------------------------------------------------------------------------
 

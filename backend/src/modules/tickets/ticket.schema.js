@@ -22,6 +22,10 @@ export const listTicketsSchema = z.object({
   ...pagination,
 });
 
+export const activitySchema = z.object({
+  limit: z.coerce.number().int().min(1).max(50).default(10),
+});
+
 export const createTicketSchema = z.object({
   subject: z
     .string({ error: 'Subject is required' })

@@ -3,6 +3,7 @@ import { authenticate, authorize } from '../../middleware/authenticate.js';
 import { validate } from '../../middleware/validate.js';
 import { rateLimit } from '../../middleware/rateLimit.js';
 import {
+  activitySchema,
   createTicketSchema,
   listTicketsSchema,
   replySchema,
@@ -26,6 +27,7 @@ const createLimit = rateLimit({
 
 router.get('/', validate({ query: listTicketsSchema }), tickets.list);
 router.get('/stats', tickets.stats);
+router.get('/activity', validate({ query: activitySchema }), tickets.activity);
 router.post(
   '/',
   authorize('customer'),

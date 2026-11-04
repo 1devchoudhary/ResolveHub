@@ -299,7 +299,27 @@ describe('listing and search', () => {
     const res = await request(app).get('/api/tickets/stats').set(customer.auth);
 
     expect(res.status).toBe(200);
-    expect(res.body.data).toMatchObject({ total: 1, active: 1, resolved: 0 });
+    expect(res.body.data).toMatchObject({
+      total: 1,
+      active: 1,
+      resolved: 0,
+      byStatus: { open: 1 },
+    });
+  });
+
+  it('returns a recent activity feed scoped to the viewer', async () => {
+    const customer = await signedInUser();
+    const stranger = await signedInUser();
+    await createTicket(customer.auth);
+
+    const mine = await request(app).get('/api/tickets/activity').set(customer.auth);
+    const theirs = await request(app).get('/api/tickets/activity').set(stranger.auth);
+
+    expect(mine.body.data.items[0]).toMatchObject({
+      type: 'created',
+      ticketNumber: expect.any(String),
+    });
+    expect(theirs.body.data.items).toEqual([]);
   });
 
   it('lists categories and agents', async () => {

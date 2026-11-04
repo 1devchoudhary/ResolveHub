@@ -280,3 +280,37 @@ export const findParticipants = async (ticketId, db = pool) => {
   );
   return rows[0] ?? null;
 };
+
+// Tab counts for ticket lists: { open: 3, pending: 1, ... }
+export const countByStatus = async ({ customerId } = {}, db = pool) => {
+  const { rows } = await db.query(
+    `SELECT status, count(*) AS n FROM tickets
+     WHERE $1::int IS NULL OR customer_id = $1
+     GROUP BY status`,
+    [customerId ?? null],
+  );
+  return Object.fromEntries(rows.map((row) => [row.status, row.n]));
+};
+
+// Latest audit events across every ticket the viewer can see (dashboard activity feed)
+export const listRecentEvents = async ({ customerId, limit }, db = pool) => {
+  const { rows } = await db.query(
+    `SELECT e.id, e.type, e.created_at AS "createdAt",
+            'RH-' || t.id AS "ticketNumber", t.subject AS "ticketSubject",
+            CASE WHEN e.type IN ('assigned', 'unassigned') THEN fu.name ELSE e.from_value END AS "from",
+            CASE WHEN e.type IN ('assigned', 'unassigned') THEN tu.name ELSE e.to_value END AS "to",
+            CASE WHEN actor.id IS NULL THEN NULL
+                 ELSE json_build_object('id', actor.id, 'name', actor.name, 'role', actor.role)
+            END AS actor
+     FROM ticket_events e
+     JOIN tickets t ON t.id = e.ticket_id
+     LEFT JOIN users actor ON actor.id = e.actor_id
+     LEFT JOIN users fu ON e.type IN ('assigned', 'unassigned') AND fu.id::text = e.from_value
+     LEFT JOIN users tu ON e.type IN ('assigned', 'unassigned') AND tu.id::text = e.to_value
+     WHERE $1::int IS NULL OR t.customer_id = $1
+     ORDER BY e.created_at DESC, e.id DESC
+     LIMIT $2`,
+    [customerId ?? null, limit],
+  );
+  return rows;
+};
