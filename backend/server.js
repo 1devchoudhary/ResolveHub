@@ -1,4 +1,4 @@
-// Local / long-running entry point. On Vercel, api/index.js exports the same app instead.
+// Local / long-running entry point. On Vercel, /api/index.mjs (repo root) exports the same app.
 import app from './src/app.js';
 import env from './src/config/env.js';
 import logger from './src/lib/logger.js';
