@@ -1,10 +1,15 @@
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { useSignUp } from '../hooks/useSignUp';
 import { AuthLayout } from '../components/AuthLayout';
 import { Button } from '../components/ui/Button';
+import { Alert } from '../components/ui/Alert';
+import { Spinner } from '../components/ui/Spinner';
+import { useAuth } from '../context/authContext';
+import { homeFor } from '../utilities/portals';
 import { Label, Input, PasswordInput, FieldError, FieldHint } from '../components/ui/Field';
 
 export const Signup = () => {
+  const { status, user } = useAuth();
   const {
     fullName,
     setFullName,
@@ -19,8 +24,12 @@ export const Signup = () => {
     agreeTerms,
     setAgreeTerms,
     error,
+    formError,
+    submitting,
     registerUser,
   } = useSignUp();
+
+  if (status === 'authenticated') return <Navigate to={homeFor(user.role)} replace />;
 
   return (
     <AuthLayout
@@ -41,7 +50,9 @@ export const Signup = () => {
       }
     >
       {/* Form */}
-      <form onSubmit={registerUser} className="space-y-4" id="signup-form">
+      <form onSubmit={registerUser} className="space-y-4" id="signup-form" noValidate>
+        <Alert>{formError}</Alert>
+
         {/* Full Name Field */}
         <div>
           <Label htmlFor="full-name">Full Name</Label>
@@ -153,7 +164,15 @@ export const Signup = () => {
         </div>
 
         {/* Submit Button */}
-        <Button type="submit" size="lg" fullWidth className="mt-2" id="btn-signup-submit">
+        <Button
+          type="submit"
+          size="lg"
+          fullWidth
+          className="mt-2"
+          id="btn-signup-submit"
+          disabled={submitting}
+        >
+          {submitting && <Spinner />}
           Create account
         </Button>
       </form>

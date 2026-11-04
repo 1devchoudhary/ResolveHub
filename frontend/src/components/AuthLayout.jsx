@@ -3,8 +3,8 @@ import { Logo } from './ui/Logo';
 import { ThemeToggle } from './ui/ThemeToggle';
 import { Avatar } from './ui/Avatar';
 
-// Split layout shared by Login & Signup: form on the left, product visual on the right
-export const AuthLayout = ({ title, subtitle, children, footer, logoId }) => (
+// Split layout shared by the auth pages: form on the left, product visual on the right
+export const AuthLayout = ({ title, subtitle, children, footer, logoId, badge }) => (
   <div className="min-h-screen flex flex-col lg:flex-row bg-surface-primary">
     {/* ──────────────── Left Half: Form ──────────────── */}
     <div className="relative w-full lg:w-1/2 flex flex-col px-6 py-8 sm:px-12 lg:px-16 xl:px-24">
@@ -16,6 +16,7 @@ export const AuthLayout = ({ title, subtitle, children, footer, logoId }) => (
       <div className="flex flex-1 items-center justify-center py-10">
         <div className="w-full max-w-[400px] animate-fade-in">
           <div className="mb-8">
+            {badge}
             <h1 className="text-2xl sm:text-3xl font-extrabold text-text-primary tracking-tight">
               {title}
             </h1>
