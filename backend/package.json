@@ -1,20 +1,45 @@
 {
+  "name": "resolvehub-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "REST API for ResolveHub, a customer support and ticketing system",
   "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "node --watch server.js",
+    "start": "node server.js",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "migrate:create": "node-pg-migrate create -j sql",
     "migrate:up": "node-pg-migrate up",
     "migrate:down": "node-pg-migrate down"
   },
   "dependencies": {
+    "@vercel/functions": "^3.10.6",
     "bcryptjs": "^3.0.2",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
+    "helmet": "^8.3.0",
     "jsonwebtoken": "^9.0.2",
-    "pg": "^8.23.1"
+    "pg": "^8.23.1",
+    "pino": "^10.4.0",
+    "pino-http": "^11.0.0",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
-    "node-pg-migrate": "^9.0.0"
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.14.0",
+    "globals": "^17.14.0",
+    "node-pg-migrate": "^9.0.0",
+    "pino-pretty": "^13.2.0",
+    "prettier": "^3.9.10",
+    "supertest": "^7.3.1",
+    "vitest": "^5.1.0"
   }
 }

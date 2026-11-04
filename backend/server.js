@@ -1,43 +1,31 @@
-import 'dotenv/config';
-import express from 'express';
-import cors from 'cors';
-import { checkDatabaseConnection, closePool } from './config/db.js';
-import authRouter from './routes/auth.routes.js';
-import { notFound, errorHandler } from './middleware/errorHandler.js';
-
-const PORT = process.env.PORT;
-
-const app = express();
-
-// Middleware (must run before the routes so req.body is parsed)
-app.use(cors());
-app.use(express.json());
-
-// Routes
-app.get("/", (req, res) => res.send("ResolveHub Backend "));
-app.use('/api/auth', authRouter);
-
-// Must come after all routes
-app.use(notFound);
-app.use(errorHandler);
+// Local / long-running entry point. On Vercel, api/index.js exports the same app instead.
+import app from './src/app.js';
+import env from './src/config/env.js';
+import logger from './src/lib/logger.js';
+import { checkDatabaseConnection, closePool } from './src/config/db.js';
 
 // Only start accepting requests once the database is reachable
 try {
   await checkDatabaseConnection();
+  logger.info('PostgreSQL connected');
 } catch (err) {
-  console.error("❌ Could not connect to PostgreSQL:", err.message);
+  logger.fatal({ err: err.message }, 'Could not connect to PostgreSQL');
   process.exit(1);
 }
 
-const server = app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+const server = app.listen(env.PORT, () => {
+  logger.info(`API listening on http://localhost:${env.PORT}`);
+});
 
-// Graceful shutdown: stop taking new requests, then release DB connections
+// Graceful shutdown: stop taking new requests, let in-flight ones finish, then release DB connections
 const shutdown = (signal) => {
-  console.log(`${signal} received, shutting down…`);
+  logger.info(`${signal} received, shutting down`);
   server.close(async () => {
     await closePool();
     process.exit(0);
   });
+  // Don't hang forever on a stuck connection
+  setTimeout(() => process.exit(1), 10_000).unref();
 };
 
 process.on('SIGINT', () => shutdown('SIGINT'));
