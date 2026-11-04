@@ -9,9 +9,24 @@ import { formatDate } from '../../utilities/format';
 import { currentUser } from '../../mocks/customerData';
 
 const notificationPrefs = [
-  { id: 'notify-replies', label: 'Agent replies', hint: 'Email me when an agent responds to my ticket.', defaultChecked: true },
-  { id: 'notify-status', label: 'Status changes', hint: 'When a ticket is assigned, resolved or closed.', defaultChecked: true },
-  { id: 'notify-digest', label: 'Weekly summary', hint: 'A Monday digest of all open tickets.', defaultChecked: false },
+  {
+    id: 'notify-replies',
+    label: 'Agent replies',
+    hint: 'Email me when an agent responds to my ticket.',
+    defaultChecked: true,
+  },
+  {
+    id: 'notify-status',
+    label: 'Status changes',
+    hint: 'When a ticket is assigned, resolved or closed.',
+    defaultChecked: true,
+  },
+  {
+    id: 'notify-digest',
+    label: 'Weekly summary',
+    hint: 'A Monday digest of all open tickets.',
+    defaultChecked: false,
+  },
 ];
 
 // Two-column settings section: description on the left, card on the right
@@ -29,7 +44,10 @@ export const Settings = () => (
   <>
     <PageHeader title="Settings" description="Manage your profile, security and notifications." />
 
-    <Section title="Profile" description="This information is shown to support agents on your tickets.">
+    <Section
+      title="Profile"
+      description="This information is shown to support agents on your tickets."
+    >
       {/* TODO: wire up profile update */}
       <Card>
         <CardHeader icon={UserRound} title="Personal details" />
@@ -48,20 +66,39 @@ export const Settings = () => (
             <div className="grid gap-5 sm:grid-cols-2">
               <div className="sm:col-span-2">
                 <Label htmlFor="settings-name">Full name</Label>
-                <Input id="settings-name" name="name" defaultValue={currentUser.name} autoComplete="name" />
+                <Input
+                  id="settings-name"
+                  name="name"
+                  defaultValue={currentUser.name}
+                  autoComplete="name"
+                />
               </div>
               <div>
                 <Label htmlFor="settings-email">Email</Label>
-                <Input id="settings-email" name="email" type="email" defaultValue={currentUser.email} autoComplete="email" />
+                <Input
+                  id="settings-email"
+                  name="email"
+                  type="email"
+                  defaultValue={currentUser.email}
+                  autoComplete="email"
+                />
               </div>
               <div>
                 <Label htmlFor="settings-mobile">Mobile number</Label>
-                <Input id="settings-mobile" name="mobile" type="tel" defaultValue={currentUser.mobile} autoComplete="tel" />
+                <Input
+                  id="settings-mobile"
+                  name="mobile"
+                  type="tel"
+                  defaultValue={currentUser.mobile}
+                  autoComplete="tel"
+                />
               </div>
             </div>
           </div>
           <div className="flex items-center justify-between gap-3 border-t border-border-default bg-surface-secondary px-5 py-3.5 sm:px-6 rounded-b-xl">
-            <p className="text-xs text-text-tertiary">Member since {formatDate(currentUser.createdAt)}</p>
+            <p className="text-xs text-text-tertiary">
+              Member since {formatDate(currentUser.createdAt)}
+            </p>
             <Button type="submit">Save changes</Button>
           </div>
         </form>
@@ -103,7 +140,10 @@ export const Settings = () => (
         <ul className="divide-y divide-border-default">
           {notificationPrefs.map((pref) => (
             <li key={pref.id}>
-              <label htmlFor={pref.id} className="flex cursor-pointer items-center justify-between gap-6 px-5 py-4 sm:px-6">
+              <label
+                htmlFor={pref.id}
+                className="flex cursor-pointer items-center justify-between gap-6 px-5 py-4 sm:px-6"
+              >
                 <span>
                   <span className="block text-sm font-medium text-text-primary">{pref.label}</span>
                   <span className="block text-sm text-text-secondary">{pref.hint}</span>
@@ -125,7 +165,9 @@ export const Settings = () => (
             </span>
             <div>
               <p className="text-sm font-semibold text-text-primary">Delete account</p>
-              <p className="text-sm text-text-secondary">Permanently remove your account and all ticket history.</p>
+              <p className="text-sm text-text-secondary">
+                Permanently remove your account and all ticket history.
+              </p>
             </div>
           </div>
           <Button variant="danger">Delete account</Button>

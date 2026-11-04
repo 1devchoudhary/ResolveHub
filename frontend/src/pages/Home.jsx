@@ -32,10 +32,34 @@ const iconTileClasses =
 
 // Static rows for the hero product preview
 const previewTickets = [
-  { id: 'RH-1048', subject: 'Payment failed but amount debited', status: 'in-progress', priority: 'urgent', agent: 'Priya Sharma' },
-  { id: 'RH-1047', subject: 'Password reset link expired', status: 'pending', priority: 'high', agent: 'Marcus Lee' },
-  { id: 'RH-1046', subject: 'CSV export missing columns', status: 'open', priority: 'medium', agent: null },
-  { id: 'RH-1042', subject: 'Webhook deliveries failing (401)', status: 'resolved', priority: 'high', agent: 'Priya Sharma' },
+  {
+    id: 'RH-1048',
+    subject: 'Payment failed but amount debited',
+    status: 'in-progress',
+    priority: 'urgent',
+    agent: 'Priya Sharma',
+  },
+  {
+    id: 'RH-1047',
+    subject: 'Password reset link expired',
+    status: 'pending',
+    priority: 'high',
+    agent: 'Marcus Lee',
+  },
+  {
+    id: 'RH-1046',
+    subject: 'CSV export missing columns',
+    status: 'open',
+    priority: 'medium',
+    agent: null,
+  },
+  {
+    id: 'RH-1042',
+    subject: 'Webhook deliveries failing (401)',
+    status: 'resolved',
+    priority: 'high',
+    agent: 'Priya Sharma',
+  },
 ];
 
 export const Home = () => {
@@ -145,15 +169,29 @@ export const Home = () => {
               <h1 className="mt-6 text-4xl sm:text-5xl lg:text-6xl font-extrabold text-text-primary tracking-tight leading-[1.08] animate-fade-in stagger-1 text-balance">
                 How can we help{' '}
                 <span className="relative whitespace-nowrap">
-                  <span className="bg-linear-to-r from-brand-600 to-brand-400 bg-clip-text text-transparent">you today</span>
-                  <svg className="absolute -bottom-1 left-0 w-full h-3 text-brand-300 opacity-70" viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true">
-                    <path d="M0 8 Q50 0 100 6 Q150 12 200 4" stroke="currentColor" strokeWidth="3" fill="none" strokeLinecap="round" />
+                  <span className="bg-linear-to-r from-brand-600 to-brand-400 bg-clip-text text-transparent">
+                    you today
+                  </span>
+                  <svg
+                    className="absolute -bottom-1 left-0 w-full h-3 text-brand-300 opacity-70"
+                    viewBox="0 0 200 12"
+                    preserveAspectRatio="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M0 8 Q50 0 100 6 Q150 12 200 4"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                      fill="none"
+                      strokeLinecap="round"
+                    />
                   </svg>
                 </span>
                 ?
               </h1>
               <p className="mt-5 text-lg text-text-secondary max-w-xl mx-auto lg:mx-0 animate-fade-in stagger-2 text-pretty">
-                Search our help center or submit a ticket — we’ll route it to the right expert and keep you updated at every step.
+                Search our help center or submit a ticket — we’ll route it to the right expert and
+                keep you updated at every step.
               </p>
 
               {/* Search Bar */}
@@ -181,7 +219,11 @@ export const Home = () => {
                   <TicketPlus className="h-4 w-4" />
                   Submit a Ticket
                 </Link>
-                <Link to="/login" className={buttonStyles({ variant: 'secondary', size: 'lg' })} id="hero-track-ticket">
+                <Link
+                  to="/login"
+                  className={buttonStyles({ variant: 'secondary', size: 'lg' })}
+                  id="hero-track-ticket"
+                >
                   <ClipboardList className="h-4 w-4" />
                   Track Your Ticket
                 </Link>
@@ -195,14 +237,18 @@ export const Home = () => {
                   ))}
                 </div>
                 <p className="text-sm text-text-secondary">
-                  <span className="font-semibold text-text-primary">2,000+</span> customers helped this month
+                  <span className="font-semibold text-text-primary">2,000+</span> customers helped
+                  this month
                 </p>
               </div>
             </div>
 
             {/* Product preview */}
             <div className="relative mx-auto w-full max-w-xl animate-fade-in stagger-3">
-              <div className="absolute -inset-4 rounded-3xl bg-linear-to-tr from-brand-500/20 via-brand-300/10 to-transparent blur-2xl" aria-hidden="true"></div>
+              <div
+                className="absolute -inset-4 rounded-3xl bg-linear-to-tr from-brand-500/20 via-brand-300/10 to-transparent blur-2xl"
+                aria-hidden="true"
+              ></div>
 
               <div className="relative overflow-hidden rounded-2xl border border-border-default bg-surface-primary shadow-float">
                 {/* Window chrome */}
@@ -230,14 +276,19 @@ export const Home = () => {
                     <li key={ticket.id} className="flex items-center gap-3 px-5 py-3">
                       <PriorityBadge priority={ticket.priority} showLabel={false} />
                       <div className="min-w-0 flex-1">
-                        <p className="truncate text-sm font-medium text-text-primary">{ticket.subject}</p>
+                        <p className="truncate text-sm font-medium text-text-primary">
+                          {ticket.subject}
+                        </p>
                         <p className="font-mono text-[11px] text-text-tertiary">{ticket.id}</p>
                       </div>
                       <StatusBadge status={ticket.status} className="hidden sm:inline-flex" />
                       {ticket.agent ? (
                         <Avatar name={ticket.agent} size="xs" />
                       ) : (
-                        <span className="h-6 w-6 rounded-full border border-dashed border-border-strong" title="Unassigned"></span>
+                        <span
+                          className="h-6 w-6 rounded-full border border-dashed border-border-strong"
+                          title="Unassigned"
+                        ></span>
                       )}
                     </li>
                   ))}
@@ -257,7 +308,10 @@ export const Home = () => {
               </div>
 
               {/* Floating: resolved toast */}
-              <div className="absolute -top-6 -right-2 sm:-right-6 flex items-center gap-2 rounded-xl border border-border-default bg-surface-elevated px-3.5 py-2.5 shadow-float animate-float" style={{ animationDelay: '1s' }}>
+              <div
+                className="absolute -top-6 -right-2 sm:-right-6 flex items-center gap-2 rounded-xl border border-border-default bg-surface-elevated px-3.5 py-2.5 shadow-float animate-float"
+                style={{ animationDelay: '1s' }}
+              >
                 <CircleCheckBig className="h-4 w-4 text-status-success" />
                 <p className="text-xs font-semibold text-text-primary">RH-1042 resolved</p>
               </div>
@@ -292,12 +346,8 @@ export const Home = () => {
                   </div>
                   <ArrowRight className="h-4 w-4 text-text-tertiary group-hover:text-brand-600 group-hover:translate-x-1 transition-all duration-200" />
                 </div>
-                <h3 className="text-base font-semibold text-text-primary mb-1.5">
-                  {action.title}
-                </h3>
-                <p className="text-sm text-text-secondary leading-relaxed">
-                  {action.description}
-                </p>
+                <h3 className="text-base font-semibold text-text-primary mb-1.5">{action.title}</h3>
+                <p className="text-sm text-text-secondary leading-relaxed">{action.description}</p>
               </Link>
             ))}
           </div>
@@ -307,7 +357,10 @@ export const Home = () => {
       {/* ════════════════════════════════════════════════
           HOW IT WORKS
          ════════════════════════════════════════════════ */}
-      <section className="relative bg-surface-secondary py-16 lg:py-24 border-y border-border-default" id="how-it-works">
+      <section
+        className="relative bg-surface-secondary py-16 lg:py-24 border-y border-border-default"
+        id="how-it-works"
+      >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeading
             eyebrow="How it works"
@@ -318,7 +371,10 @@ export const Home = () => {
 
           <ol className="relative grid gap-10 md:grid-cols-3 md:gap-8 max-w-5xl mx-auto">
             {/* connecting line */}
-            <div className="absolute left-[16.5%] right-[16.5%] top-7 hidden h-px bg-linear-to-r from-transparent via-border-strong to-transparent md:block" aria-hidden="true"></div>
+            <div
+              className="absolute left-[16.5%] right-[16.5%] top-7 hidden h-px bg-linear-to-r from-transparent via-border-strong to-transparent md:block"
+              aria-hidden="true"
+            ></div>
             {steps.map((step, i) => (
               <li key={step.title} className="relative text-center">
                 <div className="relative mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-border-default bg-surface-primary text-brand-600 shadow-medium dark:text-brand-300">
@@ -328,7 +384,9 @@ export const Home = () => {
                   </span>
                 </div>
                 <h3 className="mt-5 text-base font-semibold text-text-primary">{step.title}</h3>
-                <p className="mt-2 text-sm text-text-secondary leading-relaxed max-w-xs mx-auto">{step.description}</p>
+                <p className="mt-2 text-sm text-text-secondary leading-relaxed max-w-xs mx-auto">
+                  {step.description}
+                </p>
               </li>
             ))}
           </ol>
@@ -360,12 +418,8 @@ export const Home = () => {
                   </div>
                   <ArrowRight className="h-4 w-4 text-text-tertiary group-hover:text-brand-600 group-hover:translate-x-1 transition-all duration-200" />
                 </div>
-                <h3 className="text-base font-semibold text-text-primary mb-1.5">
-                  {topic.title}
-                </h3>
-                <p className="text-sm text-text-secondary leading-relaxed">
-                  {topic.description}
-                </p>
+                <h3 className="text-base font-semibold text-text-primary mb-1.5">{topic.title}</h3>
+                <p className="text-sm text-text-secondary leading-relaxed">{topic.description}</p>
               </div>
             ))}
           </div>
@@ -375,7 +429,10 @@ export const Home = () => {
       {/* ════════════════════════════════════════════════
           SYSTEM STATUS + STATS
          ════════════════════════════════════════════════ */}
-      <section className="bg-surface-secondary border-t border-border-default py-16 lg:py-20" id="stats">
+      <section
+        className="bg-surface-secondary border-t border-border-default py-16 lg:py-20"
+        id="stats"
+      >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {/* System Status Banner */}
           <div className="mb-12 flex flex-col sm:flex-row items-center justify-between gap-4 rounded-xl border border-border-default bg-surface-primary px-6 py-4 shadow-soft max-w-3xl mx-auto">
@@ -430,10 +487,16 @@ export const Home = () => {
           <div className="relative overflow-hidden rounded-3xl bg-linear-to-br from-brand-600 via-brand-700 to-brand-900 px-6 py-14 text-center shadow-float sm:px-12">
             <div
               className="absolute inset-0 opacity-[0.12]"
-              style={{ backgroundImage: 'radial-gradient(rgba(255,255,255,0.8) 1px, transparent 1px)', backgroundSize: '22px 22px' }}
+              style={{
+                backgroundImage: 'radial-gradient(rgba(255,255,255,0.8) 1px, transparent 1px)',
+                backgroundSize: '22px 22px',
+              }}
               aria-hidden="true"
             ></div>
-            <div className="absolute -top-24 -right-16 h-72 w-72 rounded-full bg-brand-400/40 blur-3xl" aria-hidden="true"></div>
+            <div
+              className="absolute -top-24 -right-16 h-72 w-72 rounded-full bg-brand-400/40 blur-3xl"
+              aria-hidden="true"
+            ></div>
 
             <div className="relative max-w-xl mx-auto">
               <p className="text-xs font-semibold tracking-[0.2em] uppercase text-white/70 mb-3">
@@ -446,7 +509,11 @@ export const Home = () => {
                 Can't find what you're looking for? Our support team is ready to assist you.
               </p>
               <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
-                <Link to="/signup" className={buttonStyles({ variant: 'inverse', size: 'lg' })} id="cta-signup">
+                <Link
+                  to="/signup"
+                  className={buttonStyles({ variant: 'inverse', size: 'lg' })}
+                  id="cta-signup"
+                >
                   Create free account
                   <ArrowRight className="h-4 w-4" />
                 </Link>

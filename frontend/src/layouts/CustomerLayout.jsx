@@ -39,7 +39,7 @@ const navItemClasses = ({ isActive }) =>
     'group flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-150',
     isActive
       ? 'bg-brand-50 text-brand-700 dark:text-brand-300'
-      : 'text-text-secondary hover:bg-surface-tertiary hover:text-text-primary'
+      : 'text-text-secondary hover:bg-surface-tertiary hover:text-text-primary',
   );
 
 const SidebarContent = ({ onNavigate }) => (
@@ -78,7 +78,9 @@ const SidebarContent = ({ onNavigate }) => (
       </ul>
 
       <div>
-        <p className="px-3 pb-2 text-[11px] font-semibold uppercase tracking-wider text-text-tertiary">Resources</p>
+        <p className="px-3 pb-2 text-[11px] font-semibold uppercase tracking-wider text-text-tertiary">
+          Resources
+        </p>
         <ul className="space-y-1">
           {resourceNav.map((item) => (
             <li key={item.to}>
@@ -141,11 +143,16 @@ export const CustomerLayout = () => {
       </aside>
 
       {/* Mobile drawer */}
-      <div className={cn('fixed inset-0 z-50 lg:hidden', isSidebarOpen ? 'pointer-events-auto' : 'pointer-events-none')}>
+      <div
+        className={cn(
+          'fixed inset-0 z-50 lg:hidden',
+          isSidebarOpen ? 'pointer-events-auto' : 'pointer-events-none',
+        )}
+      >
         <div
           className={cn(
             'absolute inset-0 bg-slate-950/50 backdrop-blur-sm transition-opacity duration-300',
-            isSidebarOpen ? 'opacity-100' : 'opacity-0'
+            isSidebarOpen ? 'opacity-100' : 'opacity-0',
           )}
           onClick={closeSidebar}
           aria-hidden="true"
@@ -153,7 +160,7 @@ export const CustomerLayout = () => {
         <aside
           className={cn(
             'absolute inset-y-0 left-0 w-72 max-w-[85vw] border-r border-border-default bg-surface-primary shadow-float transition-transform duration-300 ease-out',
-            isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+            isSidebarOpen ? 'translate-x-0' : '-translate-x-full',
           )}
           aria-label="Sidebar"
         >

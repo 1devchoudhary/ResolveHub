@@ -14,7 +14,13 @@ export const Label = ({ className, children, optional, ...props }) => (
 
 export const Input = ({ className, invalid, icon: Icon, ...props }) => {
   if (!Icon) {
-    return <input className={cn(inputStyles({ invalid }), className)} aria-invalid={invalid || undefined} {...props} />;
+    return (
+      <input
+        className={cn(inputStyles({ invalid }), className)}
+        aria-invalid={invalid || undefined}
+        {...props}
+      />
+    );
   }
   return (
     <div className="relative">
@@ -74,7 +80,10 @@ export const FieldError = ({ children, className, ...props }) => {
   if (!children) return null;
   return (
     <p
-      className={cn('mt-1.5 flex items-center gap-1.5 text-xs font-medium text-status-danger animate-slide-down', className)}
+      className={cn(
+        'mt-1.5 flex items-center gap-1.5 text-xs font-medium text-status-danger animate-slide-down',
+        className,
+      )}
       role="alert"
       {...props}
     >

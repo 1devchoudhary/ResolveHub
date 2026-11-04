@@ -82,7 +82,9 @@ export const TicketDetail = () => {
             </button>
             <span>Opened {formatRelative(ticket.createdAt)}</span>
           </div>
-          <h1 className="mt-2 text-2xl font-bold tracking-tight text-text-primary text-balance">{ticket.subject}</h1>
+          <h1 className="mt-2 text-2xl font-bold tracking-tight text-text-primary text-balance">
+            {ticket.subject}
+          </h1>
           <div className="mt-3 flex flex-wrap items-center gap-3">
             <StatusBadge status={ticket.status} />
             <PriorityBadge priority={ticket.priority} />
@@ -116,10 +118,15 @@ export const TicketDetail = () => {
       </Card>
 
       {isAwaitingCustomer && (
-        <div className="mb-6 flex items-start gap-3 rounded-xl border border-status-warning/30 bg-status-warning-bg px-4 py-3.5" role="status">
+        <div
+          className="mb-6 flex items-start gap-3 rounded-xl border border-status-warning/30 bg-status-warning-bg px-4 py-3.5"
+          role="status"
+        >
           <Hourglass className="mt-0.5 h-4 w-4 shrink-0 text-status-warning-fg" />
           <div className="flex-1 text-sm">
-            <p className="font-semibold text-status-warning-fg">{ticket.assignedTo?.name} is waiting for your reply</p>
+            <p className="font-semibold text-status-warning-fg">
+              {ticket.assignedTo?.name} is waiting for your reply
+            </p>
             <p className="text-text-secondary">Answer below so we can keep things moving.</p>
           </div>
           <a href="#reply" className="text-sm font-semibold text-status-warning-fg hover:underline">
@@ -177,7 +184,10 @@ export const TicketDetail = () => {
                 <div className="flex items-center gap-3 rounded-lg bg-surface-secondary px-4 py-3 text-sm text-text-secondary">
                   <Archive className="h-4 w-4 shrink-0" />
                   This ticket is closed. Need more help?{' '}
-                  <Link to="/app/tickets/new" className="font-semibold text-brand-600 hover:underline dark:text-brand-400">
+                  <Link
+                    to="/app/tickets/new"
+                    className="font-semibold text-brand-600 hover:underline dark:text-brand-400"
+                  >
                     Open a new ticket
                   </Link>
                 </div>
@@ -191,7 +201,11 @@ export const TicketDetail = () => {
                     <textarea
                       id="reply-body"
                       rows={3}
-                      placeholder={isAwaitingCustomer ? 'Reply to the agent…' : 'Add more details or ask a question…'}
+                      placeholder={
+                        isAwaitingCustomer
+                          ? 'Reply to the agent…'
+                          : 'Add more details or ask a question…'
+                      }
                       className="block w-full resize-none border-0 bg-transparent px-4 py-3 text-sm text-text-primary placeholder:text-text-tertiary focus:outline-none"
                     />
                     <div className="flex items-center justify-between border-t border-border-subtle bg-surface-secondary px-2 py-2">
@@ -229,20 +243,32 @@ export const TicketDetail = () => {
                 </span>
               </DetailRow>
               <DetailRow label="Created">
-                <span title={formatDateTime(ticket.createdAt)}>{formatRelative(ticket.createdAt)}</span>
+                <span title={formatDateTime(ticket.createdAt)}>
+                  {formatRelative(ticket.createdAt)}
+                </span>
               </DetailRow>
               <DetailRow label="Last update">
-                <span title={formatDateTime(ticket.updatedAt)}>{formatRelative(ticket.updatedAt)}</span>
+                <span title={formatDateTime(ticket.updatedAt)}>
+                  {formatRelative(ticket.updatedAt)}
+                </span>
               </DetailRow>
             </dl>
           </Card>
 
           {allAttachments.length > 0 && (
             <Card>
-              <CardHeader title="Attachments" description={`${allAttachments.length} file${allAttachments.length > 1 ? 's' : ''}`} />
+              <CardHeader
+                title="Attachments"
+                description={`${allAttachments.length} file${allAttachments.length > 1 ? 's' : ''}`}
+              />
               <div className="space-y-2 p-4">
                 {allAttachments.map((file) => (
-                  <AttachmentTile key={file.name} name={file.name} size={file.size} className="max-w-none" />
+                  <AttachmentTile
+                    key={file.name}
+                    name={file.name}
+                    size={file.size}
+                    className="max-w-none"
+                  />
                 ))}
               </div>
             </Card>

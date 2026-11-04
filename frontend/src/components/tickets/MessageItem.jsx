@@ -5,7 +5,14 @@ import { cn } from '../../utilities/cn';
 import { formatRelative, formatDateTime } from '../../utilities/format';
 
 // One message in the ticket conversation. Agent replies get a brand tint.
-export const MessageItem = ({ author, body, createdAt, attachments = [], isOwn = false, label }) => {
+export const MessageItem = ({
+  author,
+  body,
+  createdAt,
+  attachments = [],
+  isOwn = false,
+  label,
+}) => {
   const isAgent = author?.role === 'agent' || author?.role === 'admin';
 
   return (
@@ -14,10 +21,16 @@ export const MessageItem = ({ author, body, createdAt, attachments = [], isOwn =
       <div className="min-w-0 flex-1">
         <header className="mb-1.5 flex flex-wrap items-center gap-x-2 gap-y-1">
           <Avatar name={author?.name} size="xs" className="sm:hidden" />
-          <span className="text-sm font-semibold text-text-primary">{isOwn ? 'You' : author?.name}</span>
+          <span className="text-sm font-semibold text-text-primary">
+            {isOwn ? 'You' : author?.name}
+          </span>
           {isAgent && <Badge tone="brand">Support</Badge>}
           {label && <Badge tone="neutral">{label}</Badge>}
-          <time className="text-xs text-text-tertiary" dateTime={createdAt} title={formatDateTime(createdAt)}>
+          <time
+            className="text-xs text-text-tertiary"
+            dateTime={createdAt}
+            title={formatDateTime(createdAt)}
+          >
             {formatRelative(createdAt)}
           </time>
         </header>
@@ -25,7 +38,9 @@ export const MessageItem = ({ author, body, createdAt, attachments = [], isOwn =
         <div
           className={cn(
             'rounded-xl rounded-tl-sm border px-4 py-3 text-sm leading-relaxed text-text-primary whitespace-pre-line',
-            isAgent ? 'border-brand-200 bg-brand-50' : 'border-border-default bg-surface-primary shadow-soft'
+            isAgent
+              ? 'border-brand-200 bg-brand-50'
+              : 'border-border-default bg-surface-primary shadow-soft',
           )}
         >
           {body}

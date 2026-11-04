@@ -19,10 +19,34 @@ import { buttonStyles } from '../../components/ui/styles';
 import { categories } from '../../mocks/customerData';
 
 const priorityOptions = [
-  { value: 'low', label: 'Low', hint: 'General question', icon: SignalLow, color: 'text-text-tertiary' },
-  { value: 'medium', label: 'Medium', hint: 'Something isn’t working right', icon: SignalMedium, color: 'text-status-info' },
-  { value: 'high', label: 'High', hint: 'A key feature is blocked', icon: SignalHigh, color: 'text-status-warning' },
-  { value: 'urgent', label: 'Urgent', hint: 'Business-critical outage', icon: Flame, color: 'text-status-danger' },
+  {
+    value: 'low',
+    label: 'Low',
+    hint: 'General question',
+    icon: SignalLow,
+    color: 'text-text-tertiary',
+  },
+  {
+    value: 'medium',
+    label: 'Medium',
+    hint: 'Something isn’t working right',
+    icon: SignalMedium,
+    color: 'text-status-info',
+  },
+  {
+    value: 'high',
+    label: 'High',
+    hint: 'A key feature is blocked',
+    icon: SignalHigh,
+    color: 'text-status-warning',
+  },
+  {
+    value: 'urgent',
+    label: 'Urgent',
+    hint: 'Business-critical outage',
+    icon: Flame,
+    color: 'text-status-danger',
+  },
 ];
 
 const responseTimes = [
@@ -61,7 +85,12 @@ export const NewTicket = () => (
             {/* Subject */}
             <div>
               <Label htmlFor="ticket-subject">Subject</Label>
-              <Input id="ticket-subject" name="subject" placeholder="e.g. Payment failed but amount was debited" maxLength={120} />
+              <Input
+                id="ticket-subject"
+                name="subject"
+                placeholder="e.g. Payment failed but amount was debited"
+                maxLength={120}
+              />
               <FieldHint>A short summary helps us route your ticket to the right team.</FieldHint>
             </div>
 
@@ -82,7 +111,9 @@ export const NewTicket = () => (
 
             {/* Priority — radio cards, styled purely with CSS :checked */}
             <fieldset>
-              <legend className="mb-1.5 text-sm font-medium text-text-primary">How urgent is it?</legend>
+              <legend className="mb-1.5 text-sm font-medium text-text-primary">
+                How urgent is it?
+              </legend>
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
                 {priorityOptions.map((option) => (
                   <label
@@ -97,7 +128,9 @@ export const NewTicket = () => (
                       className="sr-only"
                     />
                     <option.icon className={`h-5 w-5 ${option.color}`} strokeWidth={2.25} />
-                    <span className="mt-1 text-sm font-semibold text-text-primary">{option.label}</span>
+                    <span className="mt-1 text-sm font-semibold text-text-primary">
+                      {option.label}
+                    </span>
                     <span className="text-xs leading-snug text-text-tertiary">{option.hint}</span>
                   </label>
                 ))}
@@ -133,10 +166,22 @@ export const NewTicket = () => (
                   <CloudUpload className="h-5 w-5" />
                 </span>
                 <span className="mt-3 text-sm text-text-secondary">
-                  <span className="font-semibold text-brand-600 dark:text-brand-400">Click to upload</span> or drag and drop
+                  <span className="font-semibold text-brand-600 dark:text-brand-400">
+                    Click to upload
+                  </span>{' '}
+                  or drag and drop
                 </span>
-                <span className="mt-1 text-xs text-text-tertiary">PNG, JPG or GIF · up to 5 MB each · max 5 files</span>
-                <input id="ticket-attachments" name="attachments" type="file" accept="image/*" multiple className="sr-only" />
+                <span className="mt-1 text-xs text-text-tertiary">
+                  PNG, JPG or GIF · up to 5 MB each · max 5 files
+                </span>
+                <input
+                  id="ticket-attachments"
+                  name="attachments"
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  className="sr-only"
+                />
               </label>
               {/* Selected files: map over them with <AttachmentTile name size onRemove /> from components/tickets */}
             </div>
@@ -144,7 +189,9 @@ export const NewTicket = () => (
 
           {/* Footer actions */}
           <div className="flex flex-col-reverse gap-3 border-t border-border-default bg-surface-secondary px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6 rounded-b-xl">
-            <p className="text-xs text-text-tertiary">You’ll get an email when an agent picks this up.</p>
+            <p className="text-xs text-text-tertiary">
+              You’ll get an email when an agent picks this up.
+            </p>
             <div className="flex gap-2">
               <Link to="/app/tickets" className={buttonStyles({ variant: 'secondary' })}>
                 Cancel
@@ -174,7 +221,11 @@ export const NewTicket = () => (
         </Card>
 
         <Card>
-          <CardHeader icon={Clock3} title="Target first response" description="By priority, during business hours" />
+          <CardHeader
+            icon={Clock3}
+            title="Target first response"
+            description="By priority, during business hours"
+          />
           <dl className="divide-y divide-border-default">
             {responseTimes.map((row) => (
               <div key={row.label} className="flex items-center justify-between px-5 py-3 text-sm">
@@ -195,7 +246,8 @@ export const NewTicket = () => (
           <div>
             <p className="text-sm font-semibold text-text-primary">Service completely down?</p>
             <p className="mt-0.5 text-sm text-text-secondary">
-              Call our 24/7 line at <span className="font-semibold text-text-primary">+1 (555) 123-4567</span>.
+              Call our 24/7 line at{' '}
+              <span className="font-semibold text-text-primary">+1 (555) 123-4567</span>.
             </p>
           </div>
         </Card>

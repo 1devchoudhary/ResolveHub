@@ -13,7 +13,7 @@ export const LogoMark = ({ size = 'md', className }) => (
     className={cn(
       'relative flex items-center justify-center bg-linear-to-br from-brand-500 to-brand-700 shadow-soft ring-1 ring-inset ring-white/15',
       SIZES[size].box,
-      className
+      className,
     )}
   >
     <MessageSquare className={cn('text-white', SIZES[size].icon)} strokeWidth={2.5} />

@@ -49,7 +49,7 @@ export const StatusStepper = ({ ticket }) => {
               <span
                 className={cn(
                   'absolute left-1/2 top-4 h-0.5 w-full',
-                  i < current ? 'bg-brand-600' : 'bg-border-default'
+                  i < current ? 'bg-brand-600' : 'bg-border-default',
                 )}
                 aria-hidden="true"
               />
@@ -59,9 +59,14 @@ export const StatusStepper = ({ ticket }) => {
               className={cn(
                 'relative z-10 flex h-8 w-8 items-center justify-center rounded-full border-2 text-xs font-semibold transition-colors',
                 isComplete && 'border-brand-600 bg-brand-600 text-white',
-                isCurrent && !isWaiting && 'border-brand-600 bg-surface-primary text-brand-600 ring-4 ring-brand-100 dark:text-brand-300',
-                isWaiting && 'border-status-warning bg-surface-primary text-status-warning ring-4 ring-status-warning-bg',
-                !isComplete && !isCurrent && 'border-border-strong bg-surface-primary text-text-tertiary'
+                isCurrent &&
+                  !isWaiting &&
+                  'border-brand-600 bg-surface-primary text-brand-600 ring-4 ring-brand-100 dark:text-brand-300',
+                isWaiting &&
+                  'border-status-warning bg-surface-primary text-status-warning ring-4 ring-status-warning-bg',
+                !isComplete &&
+                  !isCurrent &&
+                  'border-border-strong bg-surface-primary text-text-tertiary',
               )}
               aria-current={isCurrent ? 'step' : undefined}
             >
@@ -77,7 +82,11 @@ export const StatusStepper = ({ ticket }) => {
             <span
               className={cn(
                 'mt-2 px-1 text-xs font-medium leading-tight',
-                isWaiting ? 'text-status-warning-fg' : isComplete || isCurrent ? 'text-text-primary' : 'text-text-tertiary'
+                isWaiting
+                  ? 'text-status-warning-fg'
+                  : isComplete || isCurrent
+                    ? 'text-text-primary'
+                    : 'text-text-tertiary',
               )}
             >
               {label}

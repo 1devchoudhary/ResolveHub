@@ -9,8 +9,7 @@ const subscribe = (callback) => {
   return () => listeners.delete(callback);
 };
 
-const getSnapshot = () =>
-  document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+const getSnapshot = () => (document.documentElement.classList.contains('dark') ? 'dark' : 'light');
 
 const setTheme = (theme) => {
   document.documentElement.classList.toggle('dark', theme === 'dark');

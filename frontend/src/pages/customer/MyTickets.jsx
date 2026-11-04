@@ -25,7 +25,8 @@ export const MyTickets = () => {
   // UI-only tab filter over mock data — swap for a ?status= query when the API exists
   const [activeTab, setActiveTab] = useState('all');
 
-  const countFor = (key) => (key === 'all' ? tickets.length : tickets.filter((t) => t.status === key).length);
+  const countFor = (key) =>
+    key === 'all' ? tickets.length : tickets.filter((t) => t.status === key).length;
   const visible = activeTab === 'all' ? tickets : tickets.filter((t) => t.status === activeTab);
 
   return (
@@ -43,7 +44,11 @@ export const MyTickets = () => {
       <Card className="overflow-hidden">
         {/* Tabs */}
         <div className="border-b border-border-default">
-          <div className="no-scrollbar flex gap-1 overflow-x-auto px-3" role="tablist" aria-label="Filter by status">
+          <div
+            className="no-scrollbar flex gap-1 overflow-x-auto px-3"
+            role="tablist"
+            aria-label="Filter by status"
+          >
             {TABS.map((tab) => {
               const isActive = activeTab === tab.key;
               return (
@@ -55,19 +60,23 @@ export const MyTickets = () => {
                   onClick={() => setActiveTab(tab.key)}
                   className={cn(
                     'relative flex shrink-0 items-center gap-2 px-3 py-3.5 text-sm font-medium transition-colors cursor-pointer',
-                    isActive ? 'text-text-primary' : 'text-text-secondary hover:text-text-primary'
+                    isActive ? 'text-text-primary' : 'text-text-secondary hover:text-text-primary',
                   )}
                 >
                   {tab.label}
                   <span
                     className={cn(
                       'rounded-full px-1.5 py-px text-[11px] font-semibold',
-                      isActive ? 'bg-brand-600 text-white' : 'bg-surface-tertiary text-text-tertiary'
+                      isActive
+                        ? 'bg-brand-600 text-white'
+                        : 'bg-surface-tertiary text-text-tertiary',
                     )}
                   >
                     {countFor(tab.key)}
                   </span>
-                  {isActive && <span className="absolute inset-x-2 -bottom-px h-0.5 rounded-full bg-brand-600" />}
+                  {isActive && (
+                    <span className="absolute inset-x-2 -bottom-px h-0.5 rounded-full bg-brand-600" />
+                  )}
                 </button>
               );
             })}
@@ -77,10 +86,18 @@ export const MyTickets = () => {
         {/* Toolbar (visual only) */}
         <div className="flex flex-col gap-3 border-b border-border-default px-5 py-3 sm:flex-row sm:items-center">
           <div className="flex-1 sm:max-w-xs">
-            <Input icon={Search} type="search" placeholder="Search by subject or ID…" aria-label="Search tickets" />
+            <Input
+              icon={Search}
+              type="search"
+              placeholder="Search by subject or ID…"
+              aria-label="Search tickets"
+            />
           </div>
           <div className="flex items-center gap-2 sm:ml-auto">
-            <label htmlFor="ticket-sort" className="text-xs font-medium text-text-tertiary whitespace-nowrap">
+            <label
+              htmlFor="ticket-sort"
+              className="text-xs font-medium text-text-tertiary whitespace-nowrap"
+            >
               Sort by
             </label>
             <Select id="ticket-sort" defaultValue="updated">

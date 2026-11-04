@@ -37,7 +37,7 @@ export const Avatar = ({ name, src, size = 'sm', className, ring = false }) => (
       SIZES[size],
       !src && colorFor(name),
       ring && 'ring-2 ring-surface-primary',
-      className
+      className,
     )}
     title={name}
   >

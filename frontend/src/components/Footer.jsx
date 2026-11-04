@@ -57,7 +57,8 @@ export const Footer = () => {
           <div className="col-span-2 md:col-span-3 lg:col-span-2">
             <Logo id="footer-logo" />
             <p className="mt-4 text-sm text-text-secondary leading-relaxed max-w-xs">
-              Fast, friendly support for every customer. Manage tickets, resolve issues, and keep your team in sync.
+              Fast, friendly support for every customer. Manage tickets, resolve issues, and keep
+              your team in sync.
             </p>
             {/* Social Links */}
             <div className="mt-6 flex items-center gap-3">

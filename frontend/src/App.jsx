@@ -1,20 +1,19 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom"
-import { Layout } from "./Layout"
-import { Home } from "./pages/Home"
-import { About } from "./pages/About"
-import { Contact } from "./pages/Contact"
-import { Signup } from "./pages/Signup"
-import { Login } from "./pages/Login"
-import { NotFound } from "./pages/NotFound"
-import { CustomerLayout } from "./layouts/CustomerLayout"
-import { Overview } from "./pages/customer/Overview"
-import { MyTickets } from "./pages/customer/MyTickets"
-import { NewTicket } from "./pages/customer/NewTicket"
-import { TicketDetail } from "./pages/customer/TicketDetail"
-import { Settings } from "./pages/customer/Settings"
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Layout } from './Layout';
+import { Home } from './pages/Home';
+import { About } from './pages/About';
+import { Contact } from './pages/Contact';
+import { Signup } from './pages/Signup';
+import { Login } from './pages/Login';
+import { NotFound } from './pages/NotFound';
+import { CustomerLayout } from './layouts/CustomerLayout';
+import { Overview } from './pages/customer/Overview';
+import { MyTickets } from './pages/customer/MyTickets';
+import { NewTicket } from './pages/customer/NewTicket';
+import { TicketDetail } from './pages/customer/TicketDetail';
+import { Settings } from './pages/customer/Settings';
 
 function App() {
-
   return (
     <BrowserRouter>
       <Routes>
@@ -37,7 +36,7 @@ function App() {
         </Route>
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;

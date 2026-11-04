@@ -11,7 +11,7 @@ export const AttachmentTile = ({ name, size, className, onRemove }) => {
     <div
       className={cn(
         'group flex w-full max-w-xs items-center gap-3 rounded-lg border border-border-default bg-surface-primary p-2 pr-3 shadow-soft hover:border-border-strong transition-colors',
-        className
+        className,
       )}
     >
       <div
@@ -19,7 +19,7 @@ export const AttachmentTile = ({ name, size, className, onRemove }) => {
           'flex h-10 w-10 shrink-0 items-center justify-center rounded-md',
           isImage(name)
             ? 'bg-linear-to-br from-brand-100 to-brand-200 text-brand-700 dark:text-brand-300'
-            : 'bg-surface-tertiary text-text-secondary'
+            : 'bg-surface-tertiary text-text-secondary',
         )}
       >
         <Icon className="h-4 w-4" />

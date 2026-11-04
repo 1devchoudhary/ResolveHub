@@ -31,7 +31,7 @@ export const inputStyles = ({ invalid = false } = {}) =>
     'w-full rounded-lg border bg-surface-primary px-3.5 py-2.5 text-sm text-text-primary placeholder:text-text-tertiary shadow-soft transition-all duration-200 focus:outline-none focus:ring-4 disabled:cursor-not-allowed disabled:opacity-60',
     invalid
       ? 'border-status-danger focus:border-status-danger focus:ring-status-danger/15'
-      : 'border-border-default hover:border-border-strong focus:border-brand-500 focus:ring-brand-500/15'
+      : 'border-border-default hover:border-border-strong focus:border-brand-500 focus:ring-brand-500/15',
   );
 
 export const TONE_STYLES = {

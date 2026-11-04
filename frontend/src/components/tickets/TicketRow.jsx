@@ -5,7 +5,8 @@ import { Avatar } from '../ui/Avatar';
 import { formatRelative, formatDateTime } from '../../utilities/format';
 
 // Desktop column template shared by the header and every row
-const COLUMNS = 'md:grid md:grid-cols-[minmax(0,1fr)_9.5rem_6rem_10rem_6.5rem_1rem] md:items-center md:gap-4';
+const COLUMNS =
+  'md:grid md:grid-cols-[minmax(0,1fr)_9.5rem_6rem_10rem_6.5rem_1rem] md:items-center md:gap-4';
 
 export const TicketTableHeader = () => (
   <div
@@ -28,7 +29,10 @@ export const AgentCell = ({ agent }) =>
     </span>
   ) : (
     <span className="flex items-center gap-2 text-sm text-text-tertiary">
-      <span className="h-6 w-6 shrink-0 rounded-full border border-dashed border-border-strong" aria-hidden="true" />
+      <span
+        className="h-6 w-6 shrink-0 rounded-full border border-dashed border-border-strong"
+        aria-hidden="true"
+      />
       Unassigned
     </span>
   );
@@ -45,7 +49,10 @@ export const TicketRow = ({ ticket }) => (
         <span aria-hidden="true">·</span>
         <span className="truncate">{ticket.category}</span>
         {ticket.attachments?.length > 0 && (
-          <span className="inline-flex items-center gap-0.5" title={`${ticket.attachments.length} attachment(s)`}>
+          <span
+            className="inline-flex items-center gap-0.5"
+            title={`${ticket.attachments.length} attachment(s)`}
+          >
             <Paperclip className="h-3 w-3" />
             {ticket.attachments.length}
           </span>

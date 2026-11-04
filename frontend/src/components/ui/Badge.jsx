@@ -7,7 +7,7 @@ export const Badge = ({ tone = 'neutral', className, children, ...props }) => (
     className={cn(
       'inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset whitespace-nowrap',
       TONE_STYLES[tone],
-      className
+      className,
     )}
     {...props}
   >
@@ -30,7 +30,10 @@ export const PriorityBadge = ({ priority, className, showLabel = true }) => {
   const Icon = meta.icon;
   return (
     <span
-      className={cn('inline-flex items-center gap-1.5 text-xs font-medium text-text-secondary whitespace-nowrap', className)}
+      className={cn(
+        'inline-flex items-center gap-1.5 text-xs font-medium text-text-secondary whitespace-nowrap',
+        className,
+      )}
       title={`${meta.label} priority`}
     >
       <Icon className={cn('h-4 w-4', meta.color)} strokeWidth={2.25} aria-hidden="true" />

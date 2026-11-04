@@ -56,7 +56,10 @@ export const Contact = () => {
     <main className="bg-surface-primary">
       {/* ──────────────── 1. HERO SECTION ──────────────── */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-dots opacity-40 [mask-image:radial-gradient(ellipse_at_top,black_20%,transparent_65%)]" aria-hidden="true"></div>
+        <div
+          className="absolute inset-0 bg-dots opacity-40 [mask-image:radial-gradient(ellipse_at_top,black_20%,transparent_65%)]"
+          aria-hidden="true"
+        ></div>
         <div className="relative py-16 sm:py-24 text-center max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Eyebrow className="mb-5 animate-fade-in">Contact</Eyebrow>
           <h1 className="text-4xl sm:text-5xl font-extrabold text-text-primary tracking-tight animate-fade-in stagger-1">
@@ -78,11 +81,10 @@ export const Contact = () => {
                 <div className="w-14 h-14 bg-status-success-bg text-status-success rounded-full flex items-center justify-center mx-auto mb-4 ring-8 ring-status-success-bg/50">
                   <CheckCircle2 className="h-8 w-8" />
                 </div>
-                <h3 className="text-2xl font-bold text-text-primary">
-                  Message Sent!
-                </h3>
+                <h3 className="text-2xl font-bold text-text-primary">Message Sent!</h3>
                 <p className="mt-2 text-sm text-text-secondary max-w-md mx-auto">
-                  Thank you for reaching out, {formData.fullName || 'there'}. Our team has received your ticket and will respond to{' '}
+                  Thank you for reaching out, {formData.fullName || 'there'}. Our team has received
+                  your ticket and will respond to{' '}
                   <span className="font-semibold text-text-primary">{formData.email}</span> shortly.
                 </p>
                 <Button
@@ -104,7 +106,9 @@ export const Contact = () => {
               <form onSubmit={handleSubmit} className="space-y-5" id="contact-form">
                 <div>
                   <h2 className="text-lg font-semibold text-text-primary">Send us a message</h2>
-                  <p className="mt-1 text-sm text-text-secondary">Fill in the form and the right person will get back to you.</p>
+                  <p className="mt-1 text-sm text-text-secondary">
+                    Fill in the form and the right person will get back to you.
+                  </p>
                 </div>
 
                 <div className="grid gap-5 sm:grid-cols-2">
@@ -116,9 +120,7 @@ export const Contact = () => {
                       type="text"
                       required
                       value={formData.fullName}
-                      onChange={(e) =>
-                        setFormData({ ...formData, fullName: e.target.value })
-                      }
+                      onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                       placeholder="Jane Doe"
                     />
                   </div>
@@ -131,9 +133,7 @@ export const Contact = () => {
                       type="email"
                       required
                       value={formData.email}
-                      onChange={(e) =>
-                        setFormData({ ...formData, email: e.target.value })
-                      }
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       placeholder="you@company.com"
                     />
                   </div>
@@ -146,9 +146,7 @@ export const Contact = () => {
                     id="contact-subject"
                     required
                     value={formData.subject}
-                    onChange={(e) =>
-                      setFormData({ ...formData, subject: e.target.value })
-                    }
+                    onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                   >
                     <option value="" disabled>
                       Select a topic
@@ -169,9 +167,7 @@ export const Contact = () => {
                     rows={5}
                     required
                     value={formData.message}
-                    onChange={(e) =>
-                      setFormData({ ...formData, message: e.target.value })
-                    }
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     placeholder="Describe how we can help you in detail..."
                     className="resize-none"
                   />
@@ -193,15 +189,11 @@ export const Contact = () => {
                 <Mail className="h-5 w-5" />
               </div>
               <div>
-                <h3 className="text-sm font-bold text-text-primary">
-                  Email us
-                </h3>
+                <h3 className="text-sm font-bold text-text-primary">Email us</h3>
                 <p className="mt-1 text-sm text-brand-600 dark:text-brand-400 font-medium">
                   support@resolvehub.com
                 </p>
-                <p className="mt-0.5 text-xs text-text-tertiary">
-                  We respond within 2 hours
-                </p>
+                <p className="mt-0.5 text-xs text-text-tertiary">We respond within 2 hours</p>
               </div>
             </div>
 
@@ -211,21 +203,15 @@ export const Contact = () => {
                 <MessageCircle className="h-5 w-5" />
               </div>
               <div>
-                <h3 className="text-sm font-bold text-text-primary">
-                  Live chat
-                </h3>
+                <h3 className="text-sm font-bold text-text-primary">Live chat</h3>
                 <div className="mt-1 flex items-center gap-2">
                   <span className="relative flex h-2 w-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-status-success opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-status-success"></span>
                   </span>
-                  <span className="text-sm font-medium text-text-secondary">
-                    Available 24/7
-                  </span>
+                  <span className="text-sm font-medium text-text-secondary">Available 24/7</span>
                 </div>
-                <p className="mt-0.5 text-xs text-text-tertiary">
-                  Average wait time: 2 mins
-                </p>
+                <p className="mt-0.5 text-xs text-text-tertiary">Average wait time: 2 mins</p>
               </div>
             </div>
 
@@ -235,15 +221,9 @@ export const Contact = () => {
                 <Phone className="h-5 w-5" />
               </div>
               <div>
-                <h3 className="text-sm font-bold text-text-primary">
-                  Phone
-                </h3>
-                <p className="mt-1 text-sm font-medium text-text-primary">
-                  +1 (555) 123-4567
-                </p>
-                <p className="mt-0.5 text-xs text-text-tertiary">
-                  Mon to Fri, 9am to 6pm EST
-                </p>
+                <h3 className="text-sm font-bold text-text-primary">Phone</h3>
+                <p className="mt-1 text-sm font-medium text-text-primary">+1 (555) 123-4567</p>
+                <p className="mt-0.5 text-xs text-text-tertiary">Mon to Fri, 9am to 6pm EST</p>
               </div>
             </div>
           </div>
@@ -267,7 +247,7 @@ export const Contact = () => {
                   key={faq.question}
                   className={cn(
                     'bg-surface-primary rounded-xl border overflow-hidden transition-all duration-200 shadow-soft',
-                    isOpen ? 'border-brand-200 shadow-medium' : 'border-border-default'
+                    isOpen ? 'border-brand-200 shadow-medium' : 'border-border-default',
                   )}
                 >
                   <button
@@ -280,7 +260,7 @@ export const Contact = () => {
                     <ChevronDown
                       className={cn(
                         'h-5 w-5 text-text-tertiary transition-transform duration-200 shrink-0 ml-4',
-                        isOpen && 'rotate-180 text-brand-600'
+                        isOpen && 'rotate-180 text-brand-600',
                       )}
                     />
                   </button>

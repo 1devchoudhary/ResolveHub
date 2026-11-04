@@ -1,7 +1,9 @@
 import { cn } from '../../utilities/cn';
 
 export const EmptyState = ({ icon: Icon, title, description, action, className }) => (
-  <div className={cn('flex flex-col items-center justify-center px-6 py-14 text-center', className)}>
+  <div
+    className={cn('flex flex-col items-center justify-center px-6 py-14 text-center', className)}
+  >
     {Icon && (
       <div className="relative mb-5">
         <div className="absolute inset-0 rounded-2xl bg-brand-500/20 blur-xl" aria-hidden="true" />
