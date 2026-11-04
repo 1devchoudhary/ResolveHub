@@ -97,8 +97,11 @@ export const seedDemoData = async ({ now = new Date(), ticketCount = 36 } = {}) 
     let otherIndex = 0;
 
     for (let i = 0; i < ticketCount; i++) {
-      const template = TICKETS[i % TICKETS.length];
       const forDemoCustomer = i % 4 === 0 && demoIndex < DEMO_CUSTOMER_STATUSES.length;
+      // Stepping by 5 (coprime with 12) gives the demo customer nine different subjects
+      const template = forDemoCustomer
+        ? TICKETS[(demoIndex * 5) % TICKETS.length]
+        : TICKETS[i % TICKETS.length];
       const customerId = forDemoCustomer
         ? ids.rohan
         : ids[otherCustomers[otherIndex++ % otherCustomers.length].key];
