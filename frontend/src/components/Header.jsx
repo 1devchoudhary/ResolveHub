@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { Logo } from './ui/Logo';
 import { ThemeToggle } from './ui/ThemeToggle';
 import { buttonStyles } from './ui/styles';
 import { cn } from '../utilities/cn';
+import { useAuth } from '../context/authContext';
+import { homeFor } from '../utilities/portals';
 
 const publicLinks = [
   { to: '/', label: 'Home', id: 'home', end: true },
@@ -12,9 +14,10 @@ const publicLinks = [
   { to: '/contact', label: 'Contact', id: 'contact' },
 ];
 
-const appLinks = [
-  { to: '/app', label: 'Dashboard', id: 'dashboard', end: true },
-  { to: '/app/tickets', label: 'Tickets', id: 'tickets' },
+// Signed-in visitors get a shortcut back to their own portal
+const appLinksFor = (role) => [
+  ...publicLinks,
+  { to: homeFor(role), label: 'Dashboard', id: 'dashboard' },
 ];
 
 const navLinkClasses = ({ isActive }) =>
@@ -33,10 +36,19 @@ const mobileNavLinkClasses = ({ isActive }) =>
       : 'text-text-secondary hover:bg-surface-tertiary hover:text-text-primary',
   );
 
-export const Header = ({ isLoggedIn = false }) => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+export const Header = () => {
+  const { isAuthenticated: isLoggedIn, user, logout } = useAuth();
+  const navigate = useNavigate();
   const location = useLocation();
+  // The menu remembers the path it was opened on, so navigating closes it without an effect
+  const [menuOpenedAt, setMenuOpenedAt] = useState(null);
+  const isMobileMenuOpen = menuOpenedAt === location.pathname;
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/', { replace: true });
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,12 +58,7 @@ export const Header = ({ isLoggedIn = false }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu on route change
-  useEffect(() => {
-    setIsMobileMenuOpen(false);
-  }, [location.pathname]);
-
-  const links = isLoggedIn ? appLinks : publicLinks;
+  const links = isLoggedIn ? appLinksFor(user.role) : publicLinks;
 
   return (
     <header
@@ -87,7 +94,12 @@ export const Header = ({ isLoggedIn = false }) => {
             <ThemeToggle id="btn-theme-toggle" />
             <span className="mx-1 h-5 w-px bg-border-default" aria-hidden="true" />
             {isLoggedIn ? (
-              <button className={buttonStyles({ variant: 'danger', size: 'md' })} id="btn-logout">
+              <button
+                type="button"
+                onClick={handleLogout}
+                className={buttonStyles({ variant: 'danger', size: 'md' })}
+                id="btn-logout"
+              >
                 Logout
               </button>
             ) : (
@@ -111,7 +123,7 @@ export const Header = ({ isLoggedIn = false }) => {
             <ThemeToggle />
             <button
               className="flex items-center justify-center h-10 w-10 rounded-lg text-text-secondary hover:bg-surface-tertiary transition-colors duration-200 cursor-pointer"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              onClick={() => setMenuOpenedAt(isMobileMenuOpen ? null : location.pathname)}
               aria-label="Toggle menu"
               aria-expanded={isMobileMenuOpen}
               id="btn-mobile-menu"
@@ -150,6 +162,8 @@ export const Header = ({ isLoggedIn = false }) => {
               <button
                 className="w-full text-left rounded-lg px-4 py-2.5 text-sm font-medium text-status-danger hover:bg-status-danger-bg transition-colors duration-200 cursor-pointer"
                 id="mobile-btn-logout"
+                type="button"
+                onClick={handleLogout}
               >
                 Logout
               </button>
