@@ -1,3 +1,4 @@
+import { lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Layout } from './Layout';
 import { Home } from './pages/Home';
@@ -17,9 +18,15 @@ import { MyTickets } from './pages/customer/MyTickets';
 import { NewTicket } from './pages/customer/NewTicket';
 import { TicketDetail } from './pages/customer/TicketDetail';
 import { Settings } from './pages/Settings';
-import { PortalWelcome } from './pages/staff/PortalWelcome';
-import { TicketQueue } from './pages/staff/TicketQueue';
-import { TicketWorkspace } from './pages/staff/TicketWorkspace';
+
+// Staff and admin screens load on demand: customers never download them (or the charting
+// library the admin dashboard needs)
+const named = (load, name) => lazy(() => load().then((module) => ({ default: module[name] })));
+const TicketQueue = named(() => import('./pages/staff/TicketQueue'), 'TicketQueue');
+const TicketWorkspace = named(() => import('./pages/staff/TicketWorkspace'), 'TicketWorkspace');
+const Dashboard = named(() => import('./pages/admin/Dashboard'), 'Dashboard');
+const Team = named(() => import('./pages/admin/Team'), 'Team');
+const Categories = named(() => import('./pages/admin/Categories'), 'Categories');
 
 function App() {
   return (
@@ -64,7 +71,11 @@ function App() {
         {/* Admin portal */}
         <Route element={<RequireRole role="admin" />}>
           <Route path="/admin" element={<AdminLayout />}>
-            <Route index element={<PortalWelcome />} />
+            <Route index element={<Dashboard />} />
+            <Route path="tickets" element={<TicketQueue portal="admin" />} />
+            <Route path="tickets/:ticketNumber" element={<TicketWorkspace portal="admin" />} />
+            <Route path="team" element={<Team />} />
+            <Route path="categories" element={<Categories />} />
             <Route path="settings" element={<Settings />} />
           </Route>
         </Route>

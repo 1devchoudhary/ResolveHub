@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { LogOut, Menu, X, Search } from 'lucide-react';
 import { Logo } from '../components/ui/Logo';
 import { Avatar } from '../components/ui/Avatar';
 import { ThemeToggle } from '../components/ui/ThemeToggle';
 import { buttonStyles } from '../components/ui/styles';
+import { Spinner } from '../components/ui/Spinner';
 import { cn } from '../utilities/cn';
 import { useAuth } from '../context/authContext';
 import { loginFor } from '../utilities/portals';
@@ -211,7 +212,16 @@ export const PortalLayout = ({ config }) => {
         </header>
 
         <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
-          <Outlet />
+          {/* Lazy-loaded portal pages show a spinner while their chunk downloads */}
+          <Suspense
+            fallback={
+              <div className="flex justify-center py-24">
+                <Spinner className="h-6 w-6 text-brand-600" />
+              </div>
+            }
+          >
+            <Outlet />
+          </Suspense>
         </main>
       </div>
     </div>
