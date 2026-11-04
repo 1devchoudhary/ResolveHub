@@ -1,16 +1,28 @@
-# React + Vite
+# ResolveHub frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React 19 + Vite single-page app with three role-based portals (customer `/app`, agent `/agent`,
+admin `/admin`). See the [root README](../README.md) for the full project overview and
+[docs/architecture.md](../docs/architecture.md) for how the pieces fit together.
 
-Currently, two official plugins are available:
+## Scripts
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+| Command | What it does |
+|---|---|
+| `npm run dev` | Dev server on http://localhost:5173, proxying `/api` to the API on :8000 |
+| `npm run build` | Production build into `dist/` |
+| `npm run lint` | ESLint (React hooks + refresh rules) |
+| `npm run format` | Prettier |
 
-## React Compiler
+Point the dev proxy at another API with `VITE_API_PROXY_TARGET=http://localhost:8010 npm run dev`.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Structure
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```
+src/
+├── api/            fetch client (token refresh, error shape) + one module per resource
+├── context/        AuthProvider: session restore, login/logout
+├── hooks/queries/  TanStack Query hooks (cache keys, polling, mutations)
+├── components/     ui/ primitives (design system), tickets/ shared ticket views
+├── layouts/        PortalLayout shell + per-portal nav config
+└── pages/          customer/, staff/ (agent + admin ticket screens), admin/
+```
