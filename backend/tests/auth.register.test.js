@@ -29,6 +29,13 @@ describe('POST /api/auth/register', () => {
     expect(res.body.data.user).not.toHaveProperty('password_hash');
   });
 
+  it('signs the new customer in straight away', async () => {
+    const res = await register(validUser);
+
+    expect(res.body.data.accessToken).toBeTruthy();
+    expect(res.headers['set-cookie'].join(';')).toMatch(/rh_refresh=/);
+  });
+
   it('stores a bcrypt hash, never the plain password', async () => {
     await register(validUser);
     const { rows } = await query('SELECT password_hash FROM users');
@@ -68,7 +75,11 @@ describe('POST /api/auth/register', () => {
 
   it('treats differently formatted copies of the same mobile as duplicates', async () => {
     await register(validUser);
-    const res = await register({ ...validUser, email: 'other@example.com', mobile: '+91 98765-43210' });
+    const res = await register({
+      ...validUser,
+      email: 'other@example.com',
+      mobile: '+91 98765-43210',
+    });
 
     expect(res.status).toBe(409);
     expect(res.body.errors).toHaveProperty('mobile');
