@@ -13,7 +13,11 @@ export default [
     },
     rules: {
       // Unused args are fine when prefixed with "_" (e.g. Express signatures)
-      'no-unused-vars': ['error', { argsIgnorePattern: '^_', caughtErrors: 'none' }],
+      // ...and `const { secret, ...rest } = obj` is the idiomatic way to drop a key
+      'no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', caughtErrors: 'none', ignoreRestSiblings: true },
+      ],
       eqeqeq: ['error', 'always'],
       'prefer-const': 'error',
       'no-var': 'error',

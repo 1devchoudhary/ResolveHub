@@ -2,14 +2,12 @@ import 'dotenv/config';
 import { z } from 'zod';
 
 // Comma-separated list -> array of trimmed, non-empty strings
-const csv = z
-  .string()
-  .transform((value) =>
-    value
-      .split(',')
-      .map((item) => item.trim())
-      .filter(Boolean),
-  );
+const csv = z.string().transform((value) =>
+  value
+    .split(',')
+    .map((item) => item.trim())
+    .filter(Boolean),
+);
 
 const schema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),

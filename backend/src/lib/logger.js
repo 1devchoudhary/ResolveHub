@@ -20,7 +20,8 @@ const logger = pino({
     censor: '[redacted]',
   },
   // Human-readable logs locally; structured JSON in production (what Vercel's log viewer wants)
-  transport: nodeEnv === 'development' ? { target: 'pino-pretty', options: { colorize: true } } : undefined,
+  transport:
+    nodeEnv === 'development' ? { target: 'pino-pretty', options: { colorize: true } } : undefined,
 });
 
 export default logger;
