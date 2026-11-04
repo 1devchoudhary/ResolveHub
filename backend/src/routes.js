@@ -5,6 +5,7 @@ import usersRouter from './modules/users/users.routes.js';
 import agentsRouter from './modules/users/agents.routes.js';
 import ticketsRouter from './modules/tickets/ticket.routes.js';
 import categoriesRouter from './modules/categories/categories.routes.js';
+import adminRouter from './modules/admin/admin.routes.js';
 
 const router = Router();
 
@@ -20,5 +21,6 @@ router.use('/users', usersRouter);
 router.use('/agents', agentsRouter);
 router.use('/tickets', ticketsRouter);
 router.use('/categories', categoriesRouter);
+router.use('/admin', adminRouter);
 
 export default router;
