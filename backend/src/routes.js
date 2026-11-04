@@ -7,6 +7,7 @@ import ticketsRouter from './modules/tickets/ticket.routes.js';
 import categoriesRouter from './modules/categories/categories.routes.js';
 import adminRouter from './modules/admin/admin.routes.js';
 import cronRouter from './modules/demo/cron.routes.js';
+import docsRouter from './docs/docs.routes.js';
 
 const router = Router();
 
@@ -17,6 +18,7 @@ router.get('/health', async (_req, res) => {
   res.json({ status: 'ok', database: 'ok', latencyMs: Date.now() - startedAt });
 });
 
+router.use('/docs', docsRouter);
 router.use('/auth', authRouter);
 router.use('/users', usersRouter);
 router.use('/agents', agentsRouter);

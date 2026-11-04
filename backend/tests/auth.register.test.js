@@ -103,6 +103,16 @@ describe('error handling', () => {
     expect(res.body.message).toBe('Request body is not valid JSON');
   });
 
+  it('serves the OpenAPI document and the reference page', async () => {
+    const spec = await request(app).get('/api/docs/openapi.json');
+    expect(spec.status).toBe(200);
+    expect(spec.body.openapi).toBe('3.1.0');
+    expect(Object.keys(spec.body.paths)).toContain('/tickets/{number}/messages');
+
+    const docs = await request(app).get('/api/docs');
+    expect(docs.headers['content-type']).toMatch(/html/);
+  });
+
   it('returns a request id on every response', async () => {
     const res = await request(app).get('/api/health');
     expect(res.status).toBe(200);
