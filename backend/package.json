@@ -16,7 +16,8 @@
     "test:watch": "vitest",
     "migrate:create": "node-pg-migrate create -j sql",
     "migrate:up": "node-pg-migrate up",
-    "migrate:down": "node-pg-migrate down"
+    "migrate:down": "node-pg-migrate down",
+    "seed": "node scripts/seed.js"
   },
   "dependencies": {
     "@vercel/functions": "^3.10.6",
