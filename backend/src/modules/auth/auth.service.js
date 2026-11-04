@@ -10,7 +10,6 @@ import AppError from '../../utils/AppError.js';
 import * as users from '../users/user.repository.js';
 import * as tokens from './token.repository.js';
 
-const SALT_ROUNDS = 12;
 const RESET_TOKEN_TTL_MS = 30 * 60 * 1000;
 // Two tabs refreshing at the same moment both send the same cookie. The loser of that race
 // presents a token that was rotated a moment ago: that's not theft, so don't log everyone out.
@@ -42,7 +41,7 @@ export const rethrowUniqueViolation = (err) => {
   throw err;
 };
 
-export const hashPassword = (password) => bcrypt.hash(password, SALT_ROUNDS);
+export const hashPassword = (password) => bcrypt.hash(password, env.BCRYPT_ROUNDS);
 
 const refreshExpiry = () => new Date(Date.now() + env.REFRESH_TOKEN_TTL_DAYS * 86_400_000);
 

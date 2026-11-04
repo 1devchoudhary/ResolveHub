@@ -23,6 +23,8 @@ const schema = z.object({
   JWT_ACCESS_SECRET: z.string().min(32, 'JWT_ACCESS_SECRET must be at least 32 characters'),
   JWT_ACCESS_TTL: z.string().default('15m'),
   REFRESH_TOKEN_TTL_DAYS: z.coerce.number().int().positive().default(7),
+  // bcrypt cost factor: 12 in production; tests lower it so the suite stays fast
+  BCRYPT_ROUNDS: z.coerce.number().int().min(4).max(15).default(12),
 
   // Browser origins allowed to call the API directly (the Vercel rewrite makes it same-origin)
   CORS_ORIGINS: csv.default(['http://localhost:5173']),

@@ -40,7 +40,8 @@ describe('POST /api/auth/register', () => {
     await register(validUser);
     const { rows } = await query('SELECT password_hash FROM users');
 
-    expect(rows[0].password_hash).toMatch(/^\$2[aby]\$12\$/);
+    // $2b$<cost>$...: the cost is lowered in tests (BCRYPT_ROUNDS) to keep the suite fast
+    expect(rows[0].password_hash).toMatch(/^\$2[aby]\$\d{2}\$/);
     expect(rows[0].password_hash).not.toContain(validUser.password);
   });
 

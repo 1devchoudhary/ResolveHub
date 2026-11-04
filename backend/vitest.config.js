@@ -7,6 +7,7 @@ export default defineConfig({
     env: {
       NODE_ENV: 'test',
       JWT_ACCESS_SECRET: 'test-secret-that-is-long-enough-for-validation',
+      BCRYPT_ROUNDS: '4',
     },
     globalSetup: ['./tests/globalSetup.js'],
     setupFiles: ['./tests/setup.js'],
