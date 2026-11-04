@@ -1,4 +1,4 @@
-// npm run seed -- --yes
+// node scripts/seed.js --yes   (or: npm run seed -- --yes in bash/zsh)
 // Replaces ALL data in the database from DATABASE_URL_POOLED with the demo dataset.
 import env from '../src/config/env.js';
 import { closePool } from '../src/config/db.js';
@@ -7,7 +7,8 @@ import { DEMO_PASSWORD, STAFF, CUSTOMERS } from '../src/modules/demo/demo.data.j
 
 if (!process.argv.includes('--yes')) {
   console.error('This deletes every user and ticket in the target database.');
-  console.error('Run again with --yes to continue:  npm run seed -- --yes');
+  // PowerShell swallows the "--" in "npm run seed -- --yes", so suggest the direct form
+  console.error('Run again with --yes to continue:  node scripts/seed.js --yes');
   process.exit(1);
 }
 
