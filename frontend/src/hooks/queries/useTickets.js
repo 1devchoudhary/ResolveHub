@@ -59,7 +59,10 @@ const useTicketMutation = (mutationFn) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn,
-    onSuccess: (ticket) => {
+    onSuccess: async (ticket) => {
+      // A poll that started before this change could land afterwards and overwrite the fresh
+      // ticket with stale data, so cancel it first
+      await queryClient.cancelQueries({ queryKey: ticketKeys.detail(ticket.number) });
       queryClient.setQueryData(ticketKeys.detail(ticket.number), ticket);
       queryClient.invalidateQueries({ queryKey: ticketKeys.lists() });
       queryClient.invalidateQueries({ queryKey: ticketKeys.stats() });
