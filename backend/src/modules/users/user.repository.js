@@ -83,3 +83,17 @@ export const updateUser = async (id, changes, db = pool) => {
 
 export const updatePassword = (id, passwordHash, db = pool) =>
   db.query('UPDATE users SET password_hash = $2 WHERE id = $1', [id, passwordHash]);
+
+// Active agents with their current open workload (assignment pickers, admin team view)
+export const listAgents = async (db = pool) => {
+  const { rows } = await db.query(
+    `SELECT u.id, u.name, u.email,
+            count(t.id) FILTER (WHERE t.status IN ('open', 'in-progress', 'pending')) AS "openTickets"
+     FROM users u
+     LEFT JOIN tickets t ON t.assignee_id = u.id
+     WHERE u.role = 'agent' AND u.is_active
+     GROUP BY u.id
+     ORDER BY u.name`,
+  );
+  return rows;
+};
