@@ -20,6 +20,7 @@ import {
   Bell,
 } from 'lucide-react';
 import { SectionHeading } from '../components/ui/SectionHeading';
+import { DemoPortals } from '../components/DemoPortals';
 import { StatusBadge, PriorityBadge } from '../components/ui/Badge';
 import { Avatar } from '../components/ui/Avatar';
 import { buttonStyles } from '../components/ui/styles';
@@ -319,6 +320,8 @@ export const Home = () => {
           </div>
         </div>
       </section>
+
+      <DemoPortals />
 
       {/* ════════════════════════════════════════════════
           QUICK ACTIONS
